@@ -32,12 +32,12 @@
                         if (empty($_GET['CATEGORY_ID'])) { 
                         $sql = "select * from product where ACTIVE = 1";
                         }else {
-                        $sql = "select * from product where ID in (select PRODUCT_ID from product_category where CATEGORY_ID = ".$_GET['CATEGORY_ID'].") and ACTIVE = 1";
+                        $sql = "select * from product where ID in (select PRODUCT_ID from category_product where CATEGORY_ID = ".$_GET['CATEGORY_ID'].") and ACTIVE = 1";
                         }
                         $result = mysqli_query($conn,$sql);
                         while($row=mysqli_fetch_array($result))
                         {
-                            $sql_category = "select TITLE from category where ID in (select CATEGORY_ID from product_category where PRODUCT_ID = ".$row['ID'].") and ACTIVE = 1";
+                            $sql_category = "select TITLE from category where ID in (select CATEGORY_ID from category_product where PRODUCT_ID = ".$row['ID'].") and ACTIVE = 1";
                             $result_category = mysqli_query($conn,$sql_category);
                     ?>
                     <td>

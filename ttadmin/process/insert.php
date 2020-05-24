@@ -1,6 +1,6 @@
 <?php include("../connect/connection.php");
 //Page insert
-if($_POST['insertType'] === 'Page') {
+if(isset($_POST['page'])==true) {
     $status = $_POST['STATUS'];
     $title = $_POST['TITLE'];
     $description = $_POST['DESCRIPTION'];
@@ -20,14 +20,17 @@ if($_POST['insertType'] === 'Page') {
     echo $sqlinsert;
     $result=mysqli_query($conn,$sqlinsert);
     echo $result;
-    if ($result==0)
+    if ($result==0){
     echo "Eklenemedi, kontrol ediniz";
-    else
+    header('Location:../page_insert.php?action=no');
+    }else{
     echo "Başarıyla eklendi";
+    header('Location:../page_insert.php?action=yes');
     };
+  }
 }
 //Category insert
-if($_POST['insertType'] === 'Category') {
+if(isset($_POST['category'])==true) {
     $mainCategory = $_POST['MAIN_CATEGORY'];
     $status = $_POST['STATUS'];
     $timeFormat = $_POST['TIME_FORMAT'];
@@ -57,9 +60,7 @@ if($_POST['insertType'] === 'Category') {
     };
 }
 //Product insert
-if($_POST['insertType'] === 'Product') {
-    include "upload.php";
-
+if(isset($_POST['product'])==true) {
     $mainCategory = $_POST['MAIN_CATEGORY'];
     $categoryList = $_POST['CATEGORY'];
     $productType = $_POST['PRODUCT_TYPE'];
@@ -108,25 +109,25 @@ if($_POST['insertType'] === 'Product') {
     $row=mysqli_fetch_row($result_id);
 
     foreach($categoryList as $category) {
-    $sqlinsert_category="INSERT INTO product_category (PRODUCT_ID, CATEGORY_ID)
+    $sqlinsert_category="INSERT INTO category_product (PRODUCT_ID, CATEGORY_ID)
     VALUES ($row[0], $category)";
     $result_product_category=mysqli_query($conn,$sqlinsert_category);
     }
     
-    $sqlinsert_category_main="INSERT INTO product_category ( PRODUCT_ID, CATEGORY_ID, IS_MAIN)
+    $sqlinsert_category_main="INSERT INTO category_product ( PRODUCT_ID, CATEGORY_ID, IS_MAIN)
     VALUES ($row[0], $mainCategory, 1)";
-    echo $sqlinsert_category_main;
     $result_product_category_main=mysqli_query($conn,$sqlinsert_category_main);
-
+    include "upload.php";
     if ($result_product==0 || $result_product_category==0 ||  $result_product_category_main==0)
     echo "Eklenemedi, kontrol ediniz";
     else
     echo "Başarıyla eklendi";
     };
+
 }
 
 //Bank insert
-if($_POST['insertType'] === 'Bank') {
+if(isset($_POST['bank'])==true) {
     $bankName = $_POST['BANK_NAME'];
     $departmentNo = $_POST['DEPARTMENT_NO'];
     $accountName = $_POST['ACCOUNT_NAME'];
@@ -152,6 +153,51 @@ if($_POST['insertType'] === 'Bank') {
     echo "Başarıyla eklendi";
     };
 }
+//Menu insert
+if (isset($_GET['insertType'])=='Menu'){ // Form has been submitted.
+    $name = trim($_POST['name']);
+    $sql_menu = "UPDATE menu SET MENU_TEMPLATE = '".$name."' WHERE MENU_TYPE='".$_GET['menuType']."'";
+    $result=mysqli_query($conn,$sql_menu);
 
+    if (mysqli_affected_rows($conn)) {
+        echo "Menü güncellendi.";
+    }else {
+        $sql_menu_insert = "INSERT INTO menu(MENU_TYPE,MENU_TEMPLATE) VALUES ('".$_GET['menuType']."','".$name."')";
+        if(mysqli_query($conn,$sql_menu_insert)) {
+            echo 'Yeni menü eklendi.';
+        } else {
+            echo 'Menü eklenemedi.';
+        }
+    }
+}
 
+//Card insert
+if(isset($_POST['card'])==true) {
+    $message = $_POST['MESSAGE'];
+    $category = $_POST['CATEGORY'];
+    $orders = $_POST['ORDERS'];
+    $sql="select MESSAGE from card_note WHERE MESSAGE='$message' and ACTIVE=1";
+    $result  =mysqli_query($conn,$sql);
+    $rowcount=mysqli_num_rows($result);
+    if ($rowcount>0)
+    {
+    echo "Bu isimde kart notu daha önce kayıt edilmiştir.";
+    header('Location:../card_note.php?action=no');
+    } 
+    else
+    {
+    $sqlinsert="INSERT INTO card_note (MESSAGE,CATEGORY,ORDERS)
+    VALUES ('$message','$category',$orders)";
+    echo $sqlinsert;
+    $result=mysqli_query($conn,$sqlinsert);
+    echo $result;
+    if ($result==0){
+    echo "Eklenemedi, kontrol ediniz";
+    header('Location:../card_note.php?action=no');
+    }else{
+    echo "Başarıyla eklendi";
+    header('Location:../card_note.php?action=yes');
+    };
+  }
+}
 ?>

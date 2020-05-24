@@ -1,7 +1,7 @@
 <?php include "ttadmin/connect/connection.php";
-            $sql_settings    = "select * from settings where ACTIVE = 1";
-            $result_settings = mysqli_query($conn,$sql_settings);
-            $row_settings    = mysqli_fetch_assoc($result_settings);
+$sql_settings    = "select * from settings where ACTIVE = 1";
+$result_settings = mysqli_query($conn,$sql_settings);
+$row_settings    = mysqli_fetch_assoc($result_settings);
 ?>
 <!doctype html>
 <html lang="tr">
@@ -30,6 +30,7 @@
     <link href="themes/magnoliav2/css/jquery.fancybox.css" rel="stylesheet" />
     <link href="themes/magnoliav2/css/pretty-checkbox.min.css" rel="stylesheet" />
     <link href="http://fonts.googleapis.com/css?family=Oswald|Work+Sans|Quicksand|Livvic|Lexend+Deca|Montserrat|Dancing+Script" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="ttadmin/plugins/fontawesome-free/css/all.min.css">
     <script type="text/javascript" src="themes/magnoliav2/js/jquery/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="themes/magnoliav2/js/jquery/ui/jquery-ui.min.js"></script>
     <script type="text/javascript" src="themes/magnoliav2/js/common.js"></script>
@@ -203,76 +204,34 @@
                     <div class="row">
                         <div class="m-menu col-lg-9 col-md-9 hidden-xs hidden-sm">
                             <ul class="menu vcenter2">
-                                <li class="">
-                                    <a href="dogum-gunu.html" class=" vcenter"   ><img src="uploads/2019/10/birthday-515.png" class="menuicon hidden-md" />  DOĞUM GÜNÜ  </a>
-                                </li>
-                                <li class="parent dropdown">
-                                    <a href="gonderime-gore.html" class="dropdown-toggle disabled menua vcenter"   data-toggle="dropdown" ><img src="uploads/2019/10/rose-315.png" class="menuicon hidden-md" />  GÖNDERİME GÖRE <i class="fa fa-angle-down ifx" aria-hidden="true"></i> </a>
-                                    <ul class="sub-ul">
-                                        <a href="gonderime-gore.html" class="msta pull-right">
-                                            <img src="uploads/2019/10/gonderime-gore9-588.png" class="pull-right img-responsive mstimg" />
-                                        </a>
-                                        <li>
-                                            <a href="sevgiliye.html" class=""  > Sevgiliye</a>
-                                        </li>
-                                        <li>
-                                            <a href="yeni-is--terfi.html" class=""  > Yeni İş / Terfi</a>
-                                        </li>
-                                        <li>
-                                            <a href="yildonumu-.html" class=""  > Yıldönümü </a>
-                                        </li>
-                                        <li>
-                                            <a href="yeni-bebek.html" class=""  > Yeni Bebek</a>
-                                        </li>
-                                        <li>
-                                            <a href="gecmis-olsun-.html" class=""  > Geçmiş Olsun </a>
-                                        </li>
-                                        <li>
-                                            <a href="arkadasa.html" class=""  > Arkadaşa</a>
-                                        </li>
-                                        <li>
-                                            <a href="acilis-ve-toren.html" class=""  > Açılış Ve Tören</a>
-                                        </li>
-                                        <li>
-                                            <a href="cenaze-.html" class=""  > Cenaze </a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="parent dropdown">
-                                    <a href="cicekler.html" class="dropdown-toggle disabled menua vcenter"   data-toggle="dropdown" ><img src="uploads/2019/10/bouquet-1-712.png" class="menuicon hidden-md" />  ÇİÇEKLER <i class="fa fa-angle-down ifx" aria-hidden="true"></i> </a>
-                                    <ul class="sub-ul">
-                                        <a href="cicekler.html" class="msta pull-right">
-                                            <img src="uploads/2019/10/taze-cicekler-510.png" class="pull-right img-responsive mstimg" />
-                                        </a>
-                                        <li>
-                                            <a href="guller.html" class=""  > Güller</a>
-                                        </li>
-                                        <li>
-                                            <a href="lilyumlar.html" class=""  > Lilyumlar</a>
-                                        </li>
-                                        <li>
-                                            <a href="orkideler.html" class=""  > Orkideler</a>
-                                        </li>
-                                        <li>
-                                            <a href="aranjmanlar.html" class=""  > Aranjmanlar</a>
-                                        </li>
-                                        <li>
-                                            <a href="papatya--gerbera.html" class=""  > Papatya / Gerbera</a>
-                                        </li>
-                                        <li>
-                                            <a href="cicek-buketleri.html" class=""  > Çiçek Buketleri</a>
-                                        </li>
-                                        <li>
-                                            <a href="saksi-cicekleri.html" class=""  > Saksı Çiçekleri</a>
-                                        </li>
-                                        <li>
-                                            <a href="ayakli-sepet.html" class=""  > Ayaklı Sepetler</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="">
-                                    <a href="tasarim-cicekler.html" class="dropdown-toggle disabled menua vcenter"   data-toggle="dropdown" ><img src="uploads/2019/10/flower-bouquet-809.png" class="menuicon hidden-md" />  TASARIM ÇİÇEKLER  </a>
-                                </li>
+                                <?php
+                                    $sql_menu    = "select * from menu where MENU_TYPE = 'HEADER' AND ACTIVE = 1";
+                                    $result_menu = mysqli_query($conn,$sql_menu);
+                                    $row_menu    = mysqli_fetch_assoc($result_menu);
+                                    $json = json_decode($row_menu['MENU_TEMPLATE'],true);
+                                    foreach($json as $mydata)
+                                    {
+                                        if($mydata['menuType']=='MAIN') {
+                                            if(isset($mydata['children'])){
+                                            echo '<li class="parent dropdown">
+                                        <a href="'.$mydata["href"].'" class="dropdown-toggle disabled menua vcenter" data-toggle="dropdown" ><i class="'.$mydata["icon"].'" aria-hidden="true"></i>'.$mydata["text"].'<i class="fa fa-angle-down ifx" aria-hidden="true"></i> </a>
+                                        <ul class="sub-ul">';
+                                                foreach($mydata['children']  as $child)
+                                                {
+                                                    echo '<li>
+                                                            <a href="'.$child["href"].'" class=""  > '.$child["text"].'</a>
+                                                         </li>
+                                                         ';
+                                                }
+                                                echo '</ul></li>';
+                                            }else {
+                                                echo '<ul class="menu vcenter2"><li class="">
+                                                <a href="'.$mydata["href"].'" class=" vcenter"><i class="'.$mydata["icon"].'" aria-hidden="true"></i>'.$mydata["text"].'</a></li>';
+                                            }
+                                        }
+                                    }
+                                ?>
+                                </ul>
                                 <li class="visible-xs spc-menu">
                                     <a href="siparis-takip-form.html" class="vcenter"><span webicon="wpf:in-transit" class="wh25"></span>&nbsp;&nbsp;Sipariş Takibi</a>
                                 </li>
@@ -281,76 +240,6 @@
                                 </li>
                                 <li class="visible-xs spc-menu">
                                     <a href="contact.html" class="vcenter"><span webicon="wpf:assistant" class="wh25"></span>&nbsp;&nbsp;İletişim</a>
-                                </li>
-                            </ul>
-                        </div> 
-                        <div class="col-lg-3 col-md-3 hidden-xs hidden-sm">
-                            <ul class="links pull-right">
-                                <li class="user-login" id="desktop-user-login">
-                                    <a href="javascript:void(0);" class="open-div vcenter">
-                                        <span webicon="win10:gender-neutral-user" class="wh35" style="color:#fff;" title=""></span>
-                                        <span class="hidden-xs hidden-sm hidden-md linkspan">Hesabım</span>
-                                    </a>
-                                    <div class="user-login-div col-lg-12 col-md-12 col-sm-12 col-xs-6 col-m64-8 col-m48-8 col-m32-12 user-login-mobile-pos" style="">
-                                        <div class="login-form-div">
-                                            <form action="#" method="post" id="login-form">
-                                                <div class="form-group">
-                                                    <label>E-posta Adresi</label>
-                                                    <input type="email" name="username" class="form-control" placeholder="E-posta Adresi" />
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>Şifre</label>
-                                                    <input type="password" name="password" class="form-control" placeholder="******" />
-                                                </div>
-                                                <input type="hidden" name="giris" value="1" />
-                                                <div class="row">
-                                                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                                        <button type="submit" class="btn login-btn button-purp">
-                                                            Giriş Yap
-                                                        </button>
-                                                    </div>
-                                                    <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5"><a href="javascript:void(0);" class="text-danger return-forget">
-                                                        <strong>Şifremi Unuttum</strong></a> 
-                                                    </div>
-                                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><a href="uye-kayit.html" class="text-success">
-                                                        <strong>Üye Ol</strong></a> 
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="forget-form-div">
-                                            <form action="#" method="post" id="forget-form">
-                                                <div class="form-group">
-                                                    <label>Sisteme Kayıtlı E-posta Adresi</label>
-                                                    <input type="email" name="usernamef" class="form-control" placeholder="Sisteme Kayıtlı E-posta Adresi" />
-                                                </div>
-                                                <input type="hidden" name="hatirlat" value="1" />
-                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 nopadding">
-                                                    <button type="submit" class="btn btn-primary forget-btn button-purp">
-                                                        Devam Et
-                                                    </button>
-                                                </div>
-                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 nopadding"><a href="javascript:void(0);" class="text-danger return-login">
-                                                    <strong>Giriş Ekranı</strong></a> 
-                                                </div>
-                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 nopadding"><a href="uye-kayit.html" class="text-success">
-                                                    <strong>Üye Ol</strong></a> 
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li id="cart">
-                                    <div class="carttrigger">
-                                        <a href="javascript:void(0);" class="cart-link vcenter" >
-                                            <span webicon="ion:bag" class="wh35" style="color:#fff;" title=""></span>
-                                            <span class="hidden-xs hidden-sm hidden-md linkspan">Sepet</span>
-                                        </a>
-                                    </div>
-                                    <div class="content col-lg-12 col-md-12 col-sm-12 col-xs-12 col-m64-12 col-m48-12 col-m32-12">
-                                        <div class="contents">
-                                        </div>
-                                    </div>
                                 </li>
                             </ul>
                         </div>

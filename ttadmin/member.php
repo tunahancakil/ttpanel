@@ -24,11 +24,9 @@
                     <td>
                         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                         <div class="btn-group mr-2" role="group" aria-label="Third group">
-                        <form action="bank_update.php" method="GET">
-                            <?php
-                                echo '<input type="hidden" name="BANK_ID" value="'.$row_member['ID'].'">'
-                            ?>
-                            <button type="submit" class="btn btn-block bg-gradient-warning btn-xs"><ion-icon size="small" name="document-text-outline"></ion-icon>Düzenle</button>
+                        <form action="member_update.php" method="GET">
+                            <input type="hidden" name="MEMBER_ID" value="<?php echo $row_member['ID'] ?>">
+                            <button type="submit" id="update" class="btn btn-block bg-gradient-warning btn-xs"><ion-icon size="small" name="document-text-outline"></ion-icon>Düzenle</button>
                         </form>
                         </div>
                         <div class="btn-group mr-2" role="group" aria-label="Third group">
@@ -45,12 +43,10 @@
                     <td>
                         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                         <div class="btn-group mr-2" role="group" aria-label="Third group">
-                        <form action="bank_update.php" method="GET">
                             <?php
-                                echo '<input type="hidden" name="BANK_ID" value="'.$row_member['ID'].'">'
+                                echo '<input type="hidden" name="MEMBER_ID" value="'.$row_member['ID'].'">'
                             ?>
-                            <button type="submit" class="btn btn-block btn-secondary btn-xs"><ion-icon size="small" name="document-text-outline"></ion-icon>Sipariş Geçmişi</button>
-                        </form>
+                            <button type="submit" id="orders" class="btn btn-block btn-secondary btn-xs"><ion-icon size="small" name="document-text-outline"></ion-icon>Sipariş Geçmişi</button>
                         </div>
                         </div>
                     </td>

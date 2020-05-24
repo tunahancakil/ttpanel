@@ -1,4 +1,12 @@
 <?php include("header.php") ?>
+<head>
+    <style type="text/css">
+        .thumb{
+                margin: 10px 5px 0 0;
+                width: 100px;
+            }
+    </style>
+</head>
     <div class="content-wrapper">
     <h1>Ürün Ekleme</h1>
         <div class="card-body table-responsive p-8">
@@ -154,11 +162,8 @@
                                               style="width: 100%; height: 300px; font-size: 14px; line-height: 50px; border: 1px solid #dddddd; padding: 15px;"></textarea>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <input type="file" name="fileToUpload" id="fileToUpload" onchange="preview_image();" multiple>
-                                <div id="image_preview"></div>
-                            </div>
-                            
+                                <input type="file" name="file-input[]" id="file-input" multiple />
+                                <div id="thumb-output"></div>
                         </div>
                         <div class="tab-pane" id="delivery">
                             <div class="form-group">
@@ -168,12 +173,38 @@
                         </div>
                         </div>    
                     </div>
-                    <input type="hidden" name="insertType" value="Product">
                     <div class="card-footer">
-                        <button type="submit" name="submit" id="save" class="btn btn-success">Kaydet</button>
+                        <button type="submit" name="product" class="btn btn-success">Kaydet</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    <script type="text/javascript">
+        $(document).ready(function(){
+    $('#file-input').on('change', function(){ //on file input change
+        if (window.File && window.FileReader && window.FileList && window.Blob) //check File API supported browser
+        {
+            $('#thumb-output').html(''); //clear html of output element
+            var data = $(this)[0].files; //this file data
+            
+            $.each(data, function(index, file){ //loop though each file
+                if(/(\.|\/)(gif|jpe?g|png)$/i.test(file.type)){ //check supported file type
+                    var fRead = new FileReader(); //new filereader
+                    fRead.onload = (function(file){ //trigger function on successful read
+                    return function(e) {
+                        var img = $('<img/>').addClass('thumb').attr('src', e.target.result); //create image element 
+                        $('#thumb-output').append(img); //append image to output element
+                    };
+                    })(file);
+                    fRead.readAsDataURL(file); //URL representing the file's data.
+                }
+            });
+            
+        }else{
+            alert("Your browser doesn't support File API!"); //if File API is absent
+        }
+    });
+});
+    </script>
 <?php include("footer.php") ?>

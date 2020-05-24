@@ -1,10 +1,10 @@
-<?php include "product_header.php"?>    <div class="container">
+<?php include "header.php"?>    <div class="container">
     <div class="wrap-container transparent-bg">
         <div class="row"> 
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ptop20">
                 <div class="row">
                 <?php
-                    $sql = "select * from product where TITLE = '".$_GET['title']."'";
+                    $sql = "select * from product where ID = ".$_GET['id']."";
                     $result = mysqli_query($conn,$sql);
                     $row=mysqli_fetch_assoc($result);
                 ?>
@@ -345,4 +345,4 @@
     </div>
 </div>
 </div>
-<?php include "product_footer.php"?>
+<?php include "footer.php"?>

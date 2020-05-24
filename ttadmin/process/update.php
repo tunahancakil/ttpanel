@@ -42,15 +42,15 @@ if($_POST['editType'] === 'Product') {
                         WHERE id = ".$product_id."";
     $result_product=mysqli_query($conn,$sqlinsert_product);
 
-    $sqldelete_category="delete from product_category where product_id = ".$product_id."";
+    $sqldelete_category="delete from category_product where product_id = ".$product_id."";
     $result_product_category_delete=mysqli_query($conn,$sqldelete_category);
 
     foreach($category_list as $category) {
-    $sqlinsert_category="INSERT INTO product_category ( PRODUCT_ID, CATEGORY_ID) VALUES ($product_id, $category)";
+    $sqlinsert_category="INSERT INTO category_product ( PRODUCT_ID, CATEGORY_ID) VALUES ($product_id, $category)";
     $result_product_category=mysqli_query($conn,$sqlinsert_category);
     }
 
-    $sqlinsert_category_main="INSERT INTO product_category ( PRODUCT_ID, CATEGORY_ID, IS_MAIN) VALUES ($product_id, $category, 1)";
+    $sqlinsert_category_main="INSERT INTO category_product ( PRODUCT_ID, CATEGORY_ID, IS_MAIN) VALUES ($product_id, $category, 1)";
     $result_product_category_main=mysqli_query($conn,$sqlinsert_category_main);
 
     if ($result_product==0 || $result_product_category==0 || $result_product_category_main == 0) 

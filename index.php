@@ -27,7 +27,7 @@
                 $result = mysqli_query($conn,$sql);
                 while($row=mysqli_fetch_array($result))
                 {
-                    $sql_category = "select TITLE from category where ID in (select CATEGORY_ID from product_category where PRODUCT_ID = ".$row['ID'].") and ACTIVE = 1";
+                    $sql_category = "select TITLE from category where ID in (select CATEGORY_ID from category_product where PRODUCT_ID = ".$row['ID'].") and ACTIVE = 1";
                     $result_category = mysqli_query($conn,$sql_category);      
                 ?>
                     <div class="col-xs-2 col-m64-6 col-m48-12 col-m32-12">
@@ -36,15 +36,15 @@
                                 <div class="image ">
                                     <div class="product-label-special hidden-32 hidden-48 wow rubberBand"><span>%20</span></div>
                                     <div class="image_container vcenter">
-                                        <a href="<?php echo 'product.php?title='.$row['URL'].''?>" class="img  front vcenter"><img src="themes/magnoliav2/image/loading.gif" data-echo="https://www.cicekfilem.com/uploads/2019/10/1-thumb-q99-483.jpg" title="<?php echo  $row['TITLE'] ?>" alt="<?php echo $row['TITLE']?>"  class="img-responsive center-block" /></a>
+                                        <a href="<?php echo 'product.php?id='.$row['ID'].''?>" class="img  front vcenter"><img src="themes/magnoliav2/image/loading.gif" data-echo="https://www.cicekfilem.com/uploads/2019/10/1-thumb-q99-483.jpg" title="<?php echo  $row['TITLE'] ?>" alt="<?php echo $row['TITLE']?>"  class="img-responsive center-block" /></a>
                                     </div>                              
-                                    <a class="pav-colorboxx hidden-xs" href="<?php echo 'product.php?title='.$row['URL'].''?>">İNCELE</a>
+                                    <a class="pav-colorboxx hidden-xs" href="<?php echo 'product.php?id='.$row['ID'].''?>">İNCELE</a>
                                     <div class="img-overlay"></div>
                                 </div>
                             </div>
                             <div class="col-m32-8 p0">
                                 <p class="text-center sameday vcenter"><span webicon="stroke7:clock" class="wh18"></span> Aynı Gün Teslimat</p>
-                                <a href="<?php echo 'product.php?title='.$row['URL'].''?>" class="vcenter name vcenterparent"><?php echo $row['TITLE']?> </a>
+                                <a href="<?php echo 'product.php?id='.$row['ID'].''?>" class="vcenter name vcenterparent"><?php echo $row['TITLE']?> </a>
                                 <div class="group-item"> 
                                     <div class="price-cart">
                                         <div class="price text-center">
@@ -66,17 +66,15 @@
 			<div class="clearfix"></div>
 			<div class="col-sm-12 main-column no-padding">
 				<div class="product-related box ">
-
                     <?php 
                         $sql_main_category = "select * from category where ACTIVE = 1 and MAIN_PAGE = 1 order by ROW_ORDER";
                         $result_main_category = mysqli_query($conn,$sql_main_category);
                         while($row_main_category =mysqli_fetch_array($result_main_category))
                         {
-
-                        $sql_main_category_product_count = "select count(*) as total from product where ID in (select PRODUCT_ID from product_category where CATEGORY_ID = ".$row_main_category['ID'].") and ACTIVE = 1";
+                        $sql_main_category_product_count = "select count(*) as total from product where ID in (select PRODUCT_ID from category_product where CATEGORY_ID = ".$row_main_category['ID'].") and ACTIVE = 1";
                         $result_main_category_product_count = mysqli_query($conn,$sql_main_category_product_count);
                         $data=mysqli_fetch_assoc($result_main_category_product_count);
-                        $sql_main_category_product = "select * from product where ID in (select PRODUCT_ID from product_category where CATEGORY_ID = ".$row_main_category['ID'].") and ACTIVE = 1";
+                        $sql_main_category_product = "select * from product where ID in (select PRODUCT_ID from category_product where CATEGORY_ID = ".$row_main_category['ID'].") and ACTIVE = 1";
                         $result_main_category_product = mysqli_query($conn,$sql_main_category_product);      
                         ?>
 					<div class="linetext"><?php echo $row_main_category['TITLE'] ?></div>

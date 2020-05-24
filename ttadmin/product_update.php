@@ -27,7 +27,7 @@
                                     <?php
                                         $sql_main = "select ID,TITLE from category where ACTIVE = 1";
                                         $result_main = mysqli_query($conn,$sql_main);
-                                        $sql_main_category = "select * from product_category where PRODUCT_ID =".$product_id." AND IS_MAIN = 1";
+                                        $sql_main_category = "select * from category_product where PRODUCT_ID =".$product_id." AND IS_MAIN = 1";
                                         $result_main_category = mysqli_query($conn,$sql_main_category);
                                         $row_main_category =mysqli_fetch_assoc($result_main_category);
                                         while($row_main=mysqli_fetch_array($result_main)) {
@@ -49,7 +49,7 @@
                                         $sql_sub = "select ID,TITLE from category where ACTIVE = 1";
                                         $result_sub = mysqli_query($conn,$sql_sub);
                                         while($row_sub=mysqli_fetch_array($result_sub)) {
-                                            $sql_sub_category = "select * from product_category where PRODUCT_ID =".$product_id." AND CATEGORY_ID = ".$row_sub['ID']." AND IS_MAIN = 0";
+                                            $sql_sub_category = "select * from category_product where PRODUCT_ID =".$product_id." AND CATEGORY_ID = ".$row_sub['ID']." AND IS_MAIN = 0";
                                             $result_sub_category = mysqli_query($conn,$sql_sub_category);
                                             $row_sub_category=mysqli_fetch_assoc($result_sub_category);
                                             if (is_null($row_sub_category['CATEGORY_ID'])) {

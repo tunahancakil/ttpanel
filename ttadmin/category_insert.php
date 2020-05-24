@@ -99,9 +99,8 @@
                             </div>
                         </div>
                     </div>
-                    <input type="hidden" name="insertType" value="Category">
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Kaydet</button>
+                        <button type="submit" name="category" class="btn btn-primary">Kaydet</button>
                     </div>
                 </form>
             </div>

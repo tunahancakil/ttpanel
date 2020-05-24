@@ -1,54 +1,361 @@
 <?php include("header.php") ?>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font: 16px Arial;  
+}
+
+/*the container must be positioned relative:*/
+.autocomplete {
+  position: relative;
+  display: inline-block;
+}
+
+input {
+  border: 1px solid transparent;
+  background-color: #f1f1f1;
+  padding: 10px;
+  font-size: 16px;
+}
+
+input[type=text] {
+  background-color: #f1f1f1;
+  width: 100%;
+}
+
+input[type=submit] {
+  background-color: DodgerBlue;
+  color: #fff;
+  cursor: pointer;
+}
+
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff; 
+  border-bottom: 1px solid #d4d4d4; 
+}
+
+/*when hovering an item:*/
+.autocomplete-items div:hover {
+  background-color: #e9e9e9; 
+}
+
+/*when navigating through the items using the arrow keys:*/
+.autocomplete-active {
+  background-color: DodgerBlue !important; 
+  color: #ffffff; 
+}
+</style>
+</head>     
     <div class="content-wrapper">
     <h1>Menü Ekleme</h1>
         <div class="card-body table-responsive p-8">
             <div class="card">
-                <div class="card-header p-2">
-                    <ul class="nav nav-pills">
-                    <li class="nav-item"><a class="nav-link active" href="#general_data" data-toggle="tab">Genel Bilgiler</a></li>
-                    </ul>
-                </div>
-                <form method="POST" action="process/insert.php">
-                    <div class="card-body">
-                        <div class="tab-content">
-                        <div class="active tab-pane" id="general_data">
-                            <div class="form-group">
-                                <label for="TITLE">Menü Adı</label>
-                                <input type="text" class="form-control" name="TITLE" placeholder="Menü Adı" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Menü Yeri</label>
-                                <div class="select2-purple">
-                                <select name="MAIN_CATEGORY" class="form-control select2bs4" style="width: 100%;">
-                                        <option value="HEADER">Üst Menü</option>
-                                        <option value="FOOTER">Alt Menü</option>
-                                </select>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12"><h2>Demo</h2>
+                        <p>Click the Load Button to execute the method <code>setData(Array data)</code></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-3">
+                                <!--
+                                <div class="card-header"><h5 class="float-left">Menu</h5>
+                                    <div class="float-right">
+                                        <button id="btnReload" type="button" class="btn btn-outline-secondary">
+                                            <i class="fa fa-play"></i> Load Data</button>
+                                    </div>
+                                </div>
+                                -->
+                                <div class="card-body">
+                                    <ul id="myEditor" class="sortableLists list-group">
+                                    </ul>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label>Menü Pozisyonu</label>
-                                <div class="select2-purple">
-                                <select name="MAIN_CATEGORY" class="form-control select2bs4" style="width: 100%;">
-                                    <option value="">Ana Menü</option>
-                                    <?php
-                                        $sql = "select * from menu where ACTIVE = 1 AND PARENT_ID != 0";
-                                        $result = mysqli_query($conn,$sql);
-                                        while($row=mysqli_fetch_array($result)) {
-                                        echo '<option value="'.$row['ID'].'">'.$row['TITLE'].'</option>';
-                                        }
-                                    ?>
-                                </select>
+                            <!--
+                            <p>Click the Output button to execute the function <code>getString();</code></p>
+                            <div class="card">
+                                <div class="card-header">JSON Output
+                                <div class="float-right">
+                                <button id="btnOutput" type="button" class="btn btn-success"><i class="fas fa-check-square"></i> Output</button>
+                                </div>
+                                </div>
+                                <div class="card-body">
+                                <div class="form-group"><textarea id="out" class="form-control" cols="50" rows="10"></textarea>
+                                </div>
                                 </div>
                             </div>
+                            -->
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card border-primary mb-3">
+                                <div class="card-header bg-primary text-white">Edit item</div>
+                                <div class="card-body">
+                                    <form id="frmEdit" class="form-horizontal">
+                                        <div class="form-group">
+                                            <label for="menuType">Menu Tipi</label>
+                                            <select name="menuType" id="menuType" class="form-control item-menu">
+                                                <option></option>
+                                                <option value="PAGE">Sayfa</option>
+                                                <option value="TEXT">Düz Yazı</option>
+                                                <option value="CATEGORY">Kategori</option>
+                                                <option value="PRODUCT">Ürün</option>
+                                                <option value="MAIN">Ana Menü</option>
+                                                <option value="IMAGE">Resim</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="text">Text</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control item-menu" name="text" id="text" placeholder="Text">
+                                                <div class="input-group-append">
+                                                    <button type="button" id="myEditor_icon" class="btn btn-outline-secondary"></button>
+                                                </div>
+                                            </div>
+                                            <input type="hidden" name="icon" class="item-menu">
+                                        </div>
+                                            <input type="hidden" class="form-control item-menu" id="href" name="href" placeholder="URL">
+                                    </form>
+                                </div>
+                                <div class="card-footer">
+                                    <button type="button" id="btnUpdate" class="btn btn-primary" disabled><i class="fas fa-sync-alt"></i> Update</button>
+                                    <button type="button" id="btnAdd" class="btn btn-success"><i class="fas fa-plus"></i> Add</button>
+                                    <button type="submit" name="btnSave" class="btn btn-primary btn-block">Giriş</button>
+                                </div>
                             </div>
                         </div>
-                    </div>    
-                    <input type="hidden" name="insertType" value="Menu">
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-success">Kaydet</button>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
+            <?php 
+                    $sql_menu     = "select MENU_TEMPLATE from menu where MENU_TYPE = '".$_GET['menuType']."'";
+                    $result_menu  = mysqli_query($conn,$sql_menu);
+                    $row_menu     = mysqli_fetch_assoc($result_menu);
+        echo '<script type="text/javascript"> var getMenuType = "'.$_GET['menuType'].'"</script>';
+        if (isset($row_menu['MENU_TEMPLATE'])) {
+        echo '<script type="text/javascript"> var menuTemplate = \''.$row_menu['MENU_TEMPLATE'].'\'</script>';
+        } else {
+        echo '<script type="text/javascript"> var menuTemplate = []</script>';    
+        }
+        ?>
+        <script>
+            jQuery(document).ready(function () {
+
+            function autocomplete(inp, arr) {
+              /*the autocomplete function takes two arguments,
+              the text field element and an array of possible autocompleted values:*/
+              var currentFocus;
+              /*execute a function when someone writes in the text field:*/
+              inp.addEventListener("input", function(e) {
+                  var a, b, i, val = this.value;
+                  /*close any already open lists of autocompleted values*/
+                  closeAllLists();
+                  if (!val) { return false;}
+                  currentFocus = -1;
+                  /*create a DIV element that will contain the items (values):*/
+                  a = document.createElement("DIV");
+                  a.setAttribute("id", this.id + "autocomplete-list");
+                  a.setAttribute("class", "autocomplete-items");
+                  /*append the DIV element as a child of the autocomplete container:*/
+                  this.parentNode.appendChild(a);
+                  /*for each item in the array...*/
+                  for (i = 0; i < arr.length; i++) {
+                    /*check if the item starts with the same letters as the text field value:*/
+                    if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                      /*create a DIV element for each matching element:*/
+                      b = document.createElement("DIV");
+                      /*make the matching letters bold:*/
+                      b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                      b.innerHTML += arr[i].substr(val.length);
+                      /*insert a input field that will hold the current array item's value:*/
+                      b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                      /*execute a function when someone clicks on the item value (DIV element):*/
+                      b.addEventListener("click", function(e) {
+                          /*insert the value for the autocomplete text field:*/
+                          inp.value = this.getElementsByTagName("input")[0].value;
+                          /*close the list of autocompleted values,
+                          (or any other open lists of autocompleted values:*/
+                          closeAllLists();
+                      });
+                      a.appendChild(b);
+                    }
+                  }
+              });
+              /*execute a function presses a key on the keyboard:*/
+              inp.addEventListener("keydown", function(e) {
+                  var x = document.getElementById(this.id + "autocomplete-list");
+                  if (x) x = x.getElementsByTagName("div");
+                  if (e.keyCode == 40) {
+                    /*If the arrow DOWN key is pressed,
+                    increase the currentFocus variable:*/
+                    currentFocus++;
+                    /*and and make the current item more visible:*/
+                    addActive(x);
+                  } else if (e.keyCode == 38) { //up
+                    /*If the arrow UP key is pressed,
+                    decrease the currentFocus variable:*/
+                    currentFocus--;
+                    /*and and make the current item more visible:*/
+                    addActive(x);
+                  } else if (e.keyCode == 13) {
+                    /*If the ENTER key is pressed, prevent the form from being submitted,*/
+                    e.preventDefault();
+                    if (currentFocus > -1) {
+                      /*and simulate a click on the "active" item:*/
+                      if (x) x[currentFocus].click();
+                    }
+                  }
+              });
+              function addActive(x) {
+                /*a function to classify an item as "active":*/
+                if (!x) return false;
+                /*start by removing the "active" class on all items:*/
+                removeActive(x);
+                if (currentFocus >= x.length) currentFocus = 0;
+                if (currentFocus < 0) currentFocus = (x.length - 1);
+                /*add class "autocomplete-active":*/
+                x[currentFocus].classList.add("autocomplete-active");
+              }
+              function removeActive(x) {
+                /*a function to remove the "active" class from all autocomplete items:*/
+                for (var i = 0; i < x.length; i++) {
+                  x[i].classList.remove("autocomplete-active");
+                }
+              }
+              function closeAllLists(elmnt) {
+                /*close all autocomplete lists in the document,
+                except the one passed as an argument:*/
+                var x = document.getElementsByClassName("autocomplete-items");
+                for (var i = 0; i < x.length; i++) {
+                  if (elmnt != x[i] && elmnt != inp) {
+                    x[i].parentNode.removeChild(x[i]);
+                  }
+                }
+              }
+              /*execute a function when someone clicks in the document:*/
+              document.addEventListener("click", function (e) {
+                  closeAllLists(e.target);
+              });
+            }
+
+                $('#menuType').change(function(){
+                    //Selected value
+                    var inputValue = $(this).val();
+                    //Ajax for calling php function
+                    $.post('process/get_element.php', 
+                        { dropdownValue: inputValue }, 
+                        function(data){
+                        var dataArray = [];
+                        var objParse = jQuery.parseJSON(data);
+                        for(key in objParse) {
+                        dataArray.push(String([objParse [key]['TITLE']]));
+                        }
+                        autocomplete(document.getElementById("text"), dataArray);
+                        //do after submission operation in DOM
+                    });
+                });
+                /* =============== DEMO =============== */
+                // icon picker options
+                var iconPickerOptions = {searchText: "Buscar...", labelHeader: "{0}/{1}"};
+                // sortable list options
+                var sortableListOptions = {
+                    placeholderCss: {'background-color': "#cccccc"}
+                };
+
+                var editor = new MenuEditor('myEditor', {listOptions: sortableListOptions, iconPicker: iconPickerOptions});
+                editor.setForm($('#frmEdit'));
+                editor.setUpdateButton($('#btnUpdate'));
+                editor.setData(menuTemplate);
+
+                $('#btnOutput').on('click', function () {
+                    var str = editor.getString();
+                    $("#out").text(str);
+                });
+
+                $("[name='btnSave']").on('click', function () {
+                    var str = editor.getString();
+                    $("#out").text(str);
+                    saveData(str);
+                });
+
+                function saveData(str){
+                $.ajax({
+                    type: "POST",
+                    url: "process/insert.php?insertType=Menu&menuType="+getMenuType,
+                    data: { name : str }
+                    }).done(function( msg ) {
+                    alert( "Data was saved: " + msg );
+                    });
+                }
+
+                $("#btnUpdate").click(function(){
+                    editor.update();
+                });
+
+                $('#btnAdd').click(function(){
+                    $('#href').val(convertTrToEn(createURL($('#text').val())));
+                    editor.add();
+                });
+
+                function createURL(str){
+                    return str.replace(/ /g, '-').toLowerCase();
+                }
+
+                function convertTrToEn(str) {
+                    var charMap = {
+                        Ç: 'C',
+                        Ö: 'O',
+                        Ş: 'S',
+                        İ: 'I',
+                        I: 'i',
+                        Ü: 'U',
+                        Ğ: 'G',
+                        ç: 'c',
+                        ö: 'o',
+                        ş: 's',
+                        ı: 'i',
+                        ü: 'u',
+                        ğ: 'g'
+                    };
+
+                    str_array = str.split('');
+
+                    for (var i = 0, len = str_array.length; i < len; i++) {
+                        str_array[i] = charMap[str_array[i]] || str_array[i];
+                    }
+                    str = str_array.join('');
+                    return str.replace(/[çöşüğı]/gi, "");
+                }
+                /* ====================================== */
+
+                /** PAGE ELEMENTS **/
+                $('[data-toggle="tooltip"]').tooltip();
+                $.getJSON( "https://api.github.com/repos/davicotico/jQuery-Menu-Editor", function( data ) {
+                    $('#btnStars').html(data.stargazers_count);
+                    $('#btnForks').html(data.forks_count);
+                });
+            });
+            
+        </script>
 <?php include("footer.php") ?>

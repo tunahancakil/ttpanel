@@ -26,9 +26,8 @@
                             <input type="text" class="form-control" name="IBAN">
                         </div>
                     </div>
-                    <input type="hidden" name="insertType" value="Bank">
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Kaydet</button>
+                        <button type="submit" name="bank" class="btn btn-primary">Kaydet</button>
                     </div>
                 </form>
             </div>

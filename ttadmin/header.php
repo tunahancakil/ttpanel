@@ -42,11 +42,13 @@ if (!isset($_SESSION['USER'])) {
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!-- jQuery -->
+  <script src="plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="bootstrap-iconpicker/css/bootstrap-iconpicker.min.css">
 
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
-  <script src="http://malsup.github.com/jquery.form.js"></script> 
-
-  <script>
+  <script type="text/script">
   $(document).ready(function() 
   { 
    $('form').ajaxForm(function() 
@@ -64,7 +66,6 @@ if (!isset($_SESSION['USER'])) {
     }
   }
   </script>
-
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -205,7 +206,6 @@ if (!isset($_SESSION['USER'])) {
               </li>
               <li class="nav-item">
                 <a href="" class="nav-link">
-
                   <i class="far fa-circle nav-icon"></i>
                   <p>Sipariş Raporu</p>
                 </a>
@@ -308,64 +308,8 @@ if (!isset($_SESSION['USER'])) {
               </li>
             </ul>
           </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-palette"></i>
-              <p>Sliderlar
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="product_insert.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Slider Ekle</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="product.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Slider Listele</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-store"></i>
-              <p>Bayiler
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="product_insert.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Bayi Ekle</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="product.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Bayi Listele</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="product.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Onay Bekleyenler</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="product.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Ödeme Bekleyen Hakediş</p>
-                </a>
-              </li>
-            </ul>
-          </li>
           <li class="nav-item">
-            <a class="nav-link">
+            <a href="member.php" class="nav-link">
               <i class="nav-icon fas fa-users"></i>
               <p> Üyeler
               </p>
@@ -435,6 +379,28 @@ if (!isset($_SESSION['USER'])) {
           </li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-gifts"></i>
+              <p>Kart Notları
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="card_note_insert.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Kart Notu Ekle</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="card_note.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Kart Notu Listele</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
             <i class="nav-icon fas fa-list"></i>
               <p>Menüler
                 <i class="right fas fa-angle-left"></i>
@@ -442,37 +408,21 @@ if (!isset($_SESSION['USER'])) {
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="menu_insert.php" class="nav-link">
+                <a href="menu_insert.php?menuType=HEADER" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Menü Ekle</p>
+                  <p>Üst Menü Ekle</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="product.php" class="nav-link">
+                <a href="menu_insert.php?menuType=FOOTER" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Alt Menü Ekle</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="menu.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Menüleri Listele</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-car"></i>
-              <p>Şoförler
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="product_insert.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Şoför Ekle</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="product.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Şoförleri Listele</p>
                 </a>
               </li>
             </ul>
@@ -565,13 +515,6 @@ if (!isset($_SESSION['USER'])) {
               </li>
             </ul>
           </li>
-          <li class="nav-item">
-            <a class="nav-link">
-              <i class="nav-icon fas fa-sms"></i>
-              <p> SMS Gönder
-              </p>
-            </a>
-          </li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
             <i class="nav-icon fas fa-folder-open"></i>
@@ -615,13 +558,6 @@ if (!isset($_SESSION['USER'])) {
                 </a>
               </li>
             </ul>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link">
-              <i class="nav-icon fas fa-credit-card"></i>
-              <p> POS Ayarları
-              </p>
-            </a>
           </li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
