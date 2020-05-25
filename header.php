@@ -2,6 +2,7 @@
 $sql_settings    = "select * from settings where ACTIVE = 1";
 $result_settings = mysqli_query($conn,$sql_settings);
 $row_settings    = mysqli_fetch_assoc($result_settings);
+    session_start();
 ?>
 <!doctype html>
 <html lang="tr">
@@ -210,28 +211,34 @@ $row_settings    = mysqli_fetch_assoc($result_settings);
                                     $row_menu    = mysqli_fetch_assoc($result_menu);
                                     $json = json_decode($row_menu['MENU_TEMPLATE'],true);
                                     foreach($json as $mydata)
-                                    {
-                                        if($mydata['menuType']=='MAIN') {
-                                            if(isset($mydata['children'])){
-                                            echo '<li class="parent dropdown">
-                                        <a href="'.$mydata["href"].'" class="dropdown-toggle disabled menua vcenter" data-toggle="dropdown" ><i class="'.$mydata["icon"].'" aria-hidden="true"></i>'.$mydata["text"].'<i class="fa fa-angle-down ifx" aria-hidden="true"></i> </a>
-                                        <ul class="sub-ul">';
-                                                foreach($mydata['children']  as $child)
-                                                {
-                                                    echo '<li>
-                                                            <a href="'.$child["href"].'" class=""  > '.$child["text"].'</a>
-                                                         </li>
-                                                         ';
-                                                }
-                                                echo '</ul></li>';
-                                            }else {
-                                                echo '<ul class="menu vcenter2"><li class="">
-                                                <a href="'.$mydata["href"].'" class=" vcenter"><i class="'.$mydata["icon"].'" aria-hidden="true"></i>'.$mydata["text"].'</a></li>';
-                                            }
+                                    {   
+                                        if(isset($mydata['children'])){
+                                            ?>
+                                        <li class="parent dropdown">
+                                        <a href="<?php echo '$mydata["menuType"].php?title='.$mydata["text"].''?>" class="dropdown-toggle disabled menua vcenter" data-toggle="dropdown" >
+                                            <i class="<?php echo $mydata["icon"]?>" aria-hidden="true"></i><?php echo $mydata["text"]?>
+                                            <i class="fa fa-angle-down ifx" aria-hidden="true"></i> </a>
+                                            <ul class="sub-ul">
+                                                <?php
+                                                    foreach($mydata['children']  as $child)
+                                                    { ?>
+                                                    <li>
+                                                        <a href="<?php echo $child['menuType'].'.php?title='.$mydata["text"].'' ?>" class=""> <?php echo $child["text"] ?></a>
+                                                    </li>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                            </ul>
+                                        </li>
+                                        <?php
+                                            }else { ?>
+                                            <ul class="menu vcenter2"><li class="">
+                                            <a href="<?php echo $mydata["href"] ?>" class=" vcenter"><i class="<?php echo $mydata["icon"]?>" aria-hidden="true"></i>
+                                            <?php echo $mydata["text"] ?></a></li>
+                                    <?php
                                         }
                                     }
                                 ?>
-                                </ul>
                                 <li class="visible-xs spc-menu">
                                     <a href="siparis-takip-form.html" class="vcenter"><span webicon="wpf:in-transit" class="wh25"></span>&nbsp;&nbsp;Sipariş Takibi</a>
                                 </li>
@@ -243,7 +250,116 @@ $row_settings    = mysqli_fetch_assoc($result_settings);
                                 </li>
                             </ul>
                         </div>
-                    </div> 
+                        <div class="col-lg-3 col-md-3 hidden-xs hidden-sm">
+                    <ul class="links pull-right">
+                        <li class="user-login" id="desktop-user-login">
+                            <a href="javascript:void(0);" class="open-div vcenter">
+                                <span webicon="win10:gender-neutral-user" class="wh35" style="color:#fff;" title=""></span>
+                                <span class="hidden-xs hidden-sm hidden-md linkspan">Hesabım</span>
+                            </a>
+                            <div class="user-login-div col-lg-12 col-md-12 col-sm-12 col-xs-6 col-m64-8 col-m48-8 col-m32-12 user-login-mobile-pos" style="">
+                                                                    <div class="login-form-div">
+                                        <form action="#" method="post" id="login-form">
+                                                                                        <div class="form-group">
+                                                <label>E-posta Adresi</label>
+                                                <input type="email" name="username" class="form-control" placeholder="E-posta Adresi" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Şifre</label>
+                                                <input type="password" name="password" class="form-control" placeholder="******" />
+                                            </div>
+                                            <input type="hidden" name="giris" value="1" />
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <button type="submit" class="btn login-btn button-purp">
+                                                        Giriş Yap
+                                                    </button>
+                                                </div>
+                                                <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5"><a href="javascript:void(0);" class="text-danger return-forget">
+                                                        <strong>Şifremi Unuttum</strong></a> 
+                                                </div>
+                                                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3"><a href="uye-kayit.html" class="text-success">
+                                                        <strong>Üye Ol</strong></a> 
+                                                </div>
+                                            </div>
+                                                                                    </form>
+                                    </div>
+
+                                    <div class="forget-form-div">
+                                        <form action="#" method="post" id="forget-form">
+                                                                                        <div class="form-group">
+                                                <label>Sisteme Kayıtlı E-posta Adresi</label>
+                                                <input type="email" name="usernamef" class="form-control" placeholder="Sisteme Kayıtlı E-posta Adresi" />
+                                            </div>
+                                            <input type="hidden" name="hatirlat" value="1" />
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 nopadding">
+                                                <button type="submit" class="btn btn-primary forget-btn button-purp">
+                                                    Devam Et
+                                                </button>
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 nopadding"><a href="javascript:void(0);" class="text-danger return-login">
+                                                    <strong>Giriş Ekranı</strong></a> 
+                                            </div>
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 nopadding"><a href="uye-kayit.html" class="text-success">
+                                                    <strong>Üye Ol</strong></a> 
+                                            </div>
+                                        </form>
+                                    </div>
+                                                            </div>
+                        </li>
+                        <li id="cart">
+                            <div class="carttrigger">
+                                <a href="javascript:void(0);" class="cart-link vcenter" >
+                                    <span webicon="ion:bag" class="wh35" style="color:#fff;" title=""></span>
+                                    <span class="hidden-xs hidden-sm hidden-md linkspan">Sepet</span>
+                                </a>
+                            </div>
+                            <div class="content col-lg-12 col-md-12 col-sm-12 col-xs-12 col-m64-12 col-m48-12 col-m32-12">
+                                <div class="contents">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                    <tr>
+                                    <th width="40%">Ürün Adı</th>
+                                    <th width="10%">Adet</th>
+                                    <th width="20%">Fiyat</th>
+                                    <th width="15%">Toplam</th>
+                                    <th width="5%">Sil</th>
+                                    </tr>
+                                    <?php
+                                    if(!empty($_SESSION["shopping_cart"]))
+                                    {
+                                    $total = 0;
+                                    foreach($_SESSION["shopping_cart"] as $keys => $values)
+                                    {
+                                    ?>
+                                    <tr>
+                                    <td><?php echo $values["item_name"]; ?></td>
+                                    <td><?php echo $values["item_quantity"]; ?></td>
+                                    <td>₺ <?php echo $values["item_price"]; ?></td>
+                                    <td>₺ <?php echo number_format($values["item_quantity"] * $values["item_price"], 2);?></td>
+                                    <td><a href="product.php?action=delete&id=<?php echo $values["item_id"]; ?>"><span class="text-danger">Sil</span></a></td>
+                                    </tr>
+                                    <?php
+                                    $total = $total + ($values["item_quantity"] * $values["item_price"]);
+                                    }
+                                    ?>
+                                    <tr>
+                                    <td colspan="3" align="right">Total</td>
+                                    <td align="right">₺ <?php echo number_format($total, 2); ?></td>
+                                    <td></td>
+                                    </tr>
+                                    <?php
+                                    }
+                                    ?>
+                                    
+                                    </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-            </div>
+            </div> 
         </div>
+    </div>
+</div>

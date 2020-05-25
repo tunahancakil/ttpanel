@@ -145,22 +145,7 @@
 </div>
 <div class="scroll-top"><span webicon="win10:angle-up" class="wh45"></span></div>
 <div class="ckinf">Bu siteye devam ederek, size daha iyi bir çevrimiçi hizmet sunmak için çerezlerin kullanımını kabul etmiş olursunuz. <a href="cerez-politikasi.html">devamı</a> <a href="javascript:void(0);" class="ckinfok">Tamam</a></div>
-<script type="text/javascript">
-	var pencere = $(window).width();
-	(function (i, s, o, g, r, a, m) {
-		i['GoogleAnalyticsObject'] = r;
-		i[r] = i[r] || function () {
-			(i[r].q = i[r].q || []).push(arguments)
-		}, i[r].l = 1 * new Date();
-		a = s.createElement(o),
-		m = s.getElementsByTagName(o)[0];
-		a.async = 1;
-		a.src = g;
-		m.parentNode.insertBefore(a, m)
-	})(window, document, "script", "../www.google-analytics.com/analytics.js", "ga");
-	ga("create", "UA-78675234-6", "auto");
-	ga("send", "pageview");
-</script>
+
 </section>
 </body>
 <!-- Mirrored from www.cicekfilem.com/0 by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 09 May 2020 21:51:03 GMT -->

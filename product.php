@@ -1,12 +1,73 @@
-<?php include "header.php"?>    <div class="container">
+<?php include ("header.php");
+
+if(count($_SESSION["shopping_cart"]) > 0)
+{       
+    echo "<script>
+    $('#cart ').addClass('highlight active');
+    $('html, body').animate({scrollTop: 0}, 800);</script>"; 
+} 
+if(isset($_POST["add_to_cart"]))
+{
+    if(isset($_SESSION["shopping_cart"]))
+    {
+        $item_array_id = array_column($_SESSION["shopping_cart"], "item_id");
+        if(!in_array($_GET["id"], $item_array_id))
+        {
+        $count = count($_SESSION["shopping_cart"]);
+        $item_array = array(
+        'item_id'       =>  $_GET["id"],
+        'item_name'     =>  $_POST["hidden_name"],
+        'item_price'        =>  $_POST["hidden_price"],
+        'item_quantity'     =>  $_POST["quantity"]
+        );
+        $_SESSION["shopping_cart"][$count] = $item_array;
+        echo '<script>window.location="product.php?id='.$_GET["id"].'"</script>';
+        }
+        else
+        {
+            echo '<script>alert("Item Already Added")</script>';
+        }
+ 
+    }
+    else
+    {
+        $item_array = array(
+        'item_id'           =>  $_GET["id"],
+        'item_name'         =>  $_POST["hidden_name"],
+        'item_price'        =>  $_POST["hidden_price"],
+        'item_quantity'     =>  $_POST["quantity"]
+        );
+        $_SESSION["shopping_cart"][0] = $item_array;
+    }
+}
+if(isset($_GET["action"]))
+{
+    if($_GET["action"] == "delete")
+    {
+        foreach($_SESSION["shopping_cart"] as $keys => $values)
+        {
+        if($values["item_id"] == $_GET["id"])
+        {
+        unset($_SESSION["shopping_cart"][$keys]);
+        echo '<script>alert("Item Removed")</script>';
+        echo '<script>window.location="product.php?id='.$_GET["id"].'"</script>';
+        }
+        }
+    }
+}
+ 
+?>
+<div class="container">
     <div class="wrap-container transparent-bg">
         <div class="row"> 
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 ptop20">
                 <div class="row">
                 <?php
+                    if(isset($_GET['id'])) {
                     $sql = "select * from product where ID = ".$_GET['id']."";
                     $result = mysqli_query($conn,$sql);
                     $row=mysqli_fetch_assoc($result);
+                    }
                 ?>
                     <div class="col-md-2 hidden-xs hidden-sm">
                         <div class="item hidden-xs thmbs">
@@ -118,7 +179,7 @@
                                         <div class="price-cont">
                                             <div class="price-cart">
                                                 <div class="price">
-                                        <?php if (empty($row['DISCOUNT_PRICE'])) { echo '
+                                        <?php if (empty($row['DISCOUNT_PRICE'])) {echo '
                                             <div class="price-new"><span>'.substr($row['PRICE'],0,strpos($row['PRICE'], ".")).'</span> 
                                             <span><small>,'.substr($row['PRICE'],strpos($row['PRICE'], ".")).' TL<small></small>
                                             <small>+ KDV</small></small></span></div>';
@@ -131,9 +192,23 @@
                                         </div>
                                     </div>
                                     <div class="col-xs-5 col-sm-6">
-                                        <button class="button clearfix" id="button-cart">
-                                            <span class="btn-text">SİPARİŞ VER</span>
-                                        </button>
+                                            <form method="post" action="product.php?action=add&id=<?php echo $row["ID"]; ?>">
+                                        
+                                                <input type="hidden" name="quantity" value="1" class="form-control">
+                                        
+                                                <input type="hidden" name="hidden_name" value="<?php echo $row["TITLE"]; ?>">
+                                                <?php
+                                                    if (empty($row['DISCOUNT_PRICE'])) { ?>
+                                                        <input type="hidden" name="hidden_price" value="<?php echo $row["PRICE"]; ?>">
+                                                <?php    } else { ?>
+                                                    <input type="hidden" name="hidden_price" value="<?php echo $row["DISCOUNT_PRICE"]; ?>">
+                                                <?php   };
+                                                ?>
+                                                
+                                                <input type="submit" name="add_to_cart" style="margin-top:5px;" class="btn btn-success" value="Add to Cart" />
+                                        
+                                                </div>
+                                                </form>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -197,6 +272,8 @@
         </div>
     </div>
 </div>
+
+
 <div class="container">  
     <div class="row mtop40">
         <div class="col-sm-12 main-column">
@@ -343,6 +420,6 @@
             </div>
         </div>
     </div>
-</div>
+   </div>
 </div>
 <?php include "footer.php"?>

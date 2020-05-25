@@ -64,6 +64,12 @@ input[type=submit] {
   color: #ffffff; 
 }
 </style>
+    <style type="text/css">
+        .thumb{
+                margin: 10px 5px 0 0;
+                width: 100px;
+            }
+    </style>
 </head>     
     <div class="content-wrapper">
     <h1>Menü Ekleme</h1>
@@ -71,8 +77,7 @@ input[type=submit] {
             <div class="card">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-12"><h2>Demo</h2>
-                        <p>Click the Load Button to execute the method <code>setData(Array data)</code></p>
+                        <div class="col-md-12">
                         </div>
                     </div>
                     <div class="row">
@@ -106,6 +111,7 @@ input[type=submit] {
                             </div>
                             -->
                         </div>
+
                         <div class="col-md-6">
                             <div class="card border-primary mb-3">
                                 <div class="card-header bg-primary text-white">Edit item</div>
@@ -115,15 +121,14 @@ input[type=submit] {
                                             <label for="menuType">Menu Tipi</label>
                                             <select name="menuType" id="menuType" class="form-control item-menu">
                                                 <option></option>
-                                                <option value="PAGE">Sayfa</option>
-                                                <option value="TEXT">Düz Yazı</option>
-                                                <option value="CATEGORY">Kategori</option>
-                                                <option value="PRODUCT">Ürün</option>
-                                                <option value="MAIN">Ana Menü</option>
-                                                <option value="IMAGE">Resim</option>
+                                                <option value="page">Sayfa</option>
+                                                <option value="text">Düz Yazı</option>
+                                                <option value="category">Kategori</option>
+                                                <option value="product">Ürün</option>
+                                                <option value="image">Resim</option>
                                             </select>
                                         </div>
-                                        <div class="form-group">
+                                        <div id="textID" class="form-group">
                                             <label for="text">Text</label>
                                             <div class="input-group">
                                                 <input type="text" class="form-control item-menu" name="text" id="text" placeholder="Text">
@@ -139,7 +144,40 @@ input[type=submit] {
                                 <div class="card-footer">
                                     <button type="button" id="btnUpdate" class="btn btn-primary" disabled><i class="fas fa-sync-alt"></i> Update</button>
                                     <button type="button" id="btnAdd" class="btn btn-success"><i class="fas fa-plus"></i> Add</button>
-                                    <button type="submit" name="btnSave" class="btn btn-primary btn-block">Giriş</button>
+                                    <div class="container">
+                                      <!-- Trigger the modal with a button -->
+                                      <button type="button" class="btn btn-info" data-toggle="modal" id="selectImage" data-target="#myModal">Görsel Belirle</button>
+                                       <!-- Modal -->
+                                        <div class="modal fade" id="myModal" role="dialog">
+                                          <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Modal Header</h4>
+                                              </div>
+                                              <div class="modal-body">
+                                                <?php 
+                                                      $dirname = "uploads/";
+                                                      $images =  glob($dirname."*");
+                                                      foreach($images as $image) { ?>
+                                                          <div class="form-group">
+                                                                <div class="custom-control custom-radio">
+                                                                  <input class="custom-control-input" type="radio" value="<?php echo $image ?>" id="<?php echo $image ?>" name="IMAGE">
+                                                                  <label for="<?php echo $image ?>" class="custom-control-label">
+                                                                  <img class ="thumb" src="<?php echo $image ?>" /></label>
+                                                                </div>
+                                                          </div>
+                                                     <?php }
+                                                ?>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    <button type="submit" name="btnSave" class="btn btn-primary">Giriş</button>
                                 </div>
                             </div>
                         </div>
@@ -161,7 +199,20 @@ input[type=submit] {
         ?>
         <script>
             jQuery(document).ready(function () {
+            $("#selectImage").hide();
+            $("#menuType").change(function(){
+              if ($('#menuType').val() == 'image') {
+                  $("#textID").hide();
+                  $("#selectImage").show();
+                } else {
+                  $("#textID").show();
+                  $("#selectImage").hide();
+                };
+            });
 
+            $("#myModal").on("hidden.bs.modal", function () {
+                var imgUrl = $("input[name=IMAGE]").val();
+            });
             function autocomplete(inp, arr) {
               /*the autocomplete function takes two arguments,
               the text field element and an array of possible autocompleted values:*/
@@ -314,8 +365,13 @@ input[type=submit] {
                 });
 
                 $('#btnAdd').click(function(){
+                  if ($('#menuType').val() != 'image') {
                     $('#href').val(convertTrToEn(createURL($('#text').val())));
                     editor.add();
+                  } else {
+                    $('#text').val( $("input[name=IMAGE]").val());
+                    editor.add();
+                  }
                 });
 
                 function createURL(str){

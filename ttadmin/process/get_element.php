@@ -9,8 +9,10 @@
 			  case "TEXT":
 			    break;
 			  case "CATEGORY":
+			  	$sql_get_element = "SELECT TITLE FROM category WHERE ACTIVE = 1";
 			    break;
 			  case "PRODUCT":
+			  	$sql_get_element = "SELECT TITLE FROM product WHERE ACTIVE = 1";
 			    break;
 			  case "MAIN":
 			    break;
