@@ -78,7 +78,7 @@
                         $result_main_category_product = mysqli_query($conn,$sql_main_category_product);      
                         ?>
 					<div class="linetext"><?php echo $row_main_category['TITLE'] ?></div>
-                    <div class="owl-carousel owl-theme owl-carousel-main owl-carousel-customnav prod-detail-last-view" data-itm="<?php echo $data['total'] ?>">
+                    <div class="owl-carousel owl-theme owl-carousel-main owl-carousel-customnav prod-detail-last-view" data-itm="6">
                     <?php 
                         while($row_main_category_product =mysqli_fetch_array($result_main_category_product))
                         { 

@@ -2,7 +2,7 @@
 $sql_settings    = "select * from settings where ACTIVE = 1";
 $result_settings = mysqli_query($conn,$sql_settings);
 $row_settings    = mysqli_fetch_assoc($result_settings);
-    session_start();
+session_start();
 ?>
 <!doctype html>
 <html lang="tr">
@@ -151,7 +151,7 @@ $row_settings    = mysqli_fetch_assoc($result_settings);
                                         <span class="hidden-xs hidden-sm hidden-md linkspan">Sipariş Takibi</span>
                                     </a>
                                     <div class="order-form-div col-lg-12 col-md-12 col-sm-12 col-xs-12 col-m64-12 col-m48-12 col-m32-12">
-                                        <form action="https://www.cicekfilem.com/siparis-takip" method="post" id="order-query-form">
+                                        <form action="selling/order_entry.php" method="post" id="order-query-form">
                                             <div class="alert alert-danger customerrorbox" role="alert"></div>
                                             <div class="form-group">
                                                 <label>E-posta Adresi</label>
@@ -163,17 +163,15 @@ $row_settings    = mysqli_fetch_assoc($result_settings);
                                             </div>
                                             <input type="hidden" name="siparistakip" value="1" />
                                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding">
-                                                <button type="submit" class="btn order-query-btn button-purp">
-                                                    Sorgula
-                                                </button>
+                                        <button type="submit" class="btn order-query-btn button-purp">Sorgula</button>
                                             </div>
                                         </form>
                                     </div>
                                 </li>
                                 <li class="cont-form">
-                                    <a href="tel:05394143105" class="vcenter">
+                                    <a href="<?php echo $row_settings['PHONE']; ?>" class="vcenter">
                                         <span webicon="wpf:assistant" style="color:#50bb70" class="wh35"></span>
-                                        <span class="hidden-xs hidden-sm hidden-md linkspan"><strong>Destek Hattı</strong><br>0539 414 31 05</span>
+                                        <span class="hidden-xs hidden-sm hidden-md linkspan"><strong>Destek Hattı</strong><br><?php echo $row_settings['PHONE']; ?></span>
                                     </a>
                                 </li>
                             </ul>
@@ -240,13 +238,13 @@ $row_settings    = mysqli_fetch_assoc($result_settings);
                                     }
                                 ?>
                                 <li class="visible-xs spc-menu">
-                                    <a href="siparis-takip-form.html" class="vcenter"><span webicon="wpf:in-transit" class="wh25"></span>&nbsp;&nbsp;Sipariş Takibi</a>
+                                    <a href="selling/order_entry.php" class="vcenter"><span webicon="wpf:in-transit" class="wh25"></span>&nbsp;&nbsp;Sipariş Takibi</a>
                                 </li>
                                 <li class="visible-xs spc-menu">
-                                    <a href="uye-kayit.html" class="vcenter"><span webicon="ion:android-person" class="wh25"></span>&nbsp;&nbsp;Üye Ol</a>
+                                    <a href="register.php" class="vcenter"><span webicon="ion:android-person" class="wh25"></span>&nbsp;&nbsp;Üye Ol</a>
                                 </li>
                                 <li class="visible-xs spc-menu">
-                                    <a href="contact.html" class="vcenter"><span webicon="wpf:assistant" class="wh25"></span>&nbsp;&nbsp;İletişim</a>
+                                    <a href="contact.php" class="vcenter"><span webicon="wpf:assistant" class="wh25"></span>&nbsp;&nbsp;İletişim</a>
                                 </li>
                             </ul>
                         </div>
@@ -258,8 +256,8 @@ $row_settings    = mysqli_fetch_assoc($result_settings);
                                 <span class="hidden-xs hidden-sm hidden-md linkspan">Hesabım</span>
                             </a>
                             <div class="user-login-div col-lg-12 col-md-12 col-sm-12 col-xs-6 col-m64-8 col-m48-8 col-m32-12 user-login-mobile-pos" style="">
-                                                                    <div class="login-form-div">
-                                        <form action="#" method="post" id="login-form">
+                                        <div class="login-form-div">
+                                        <form action="register.php" method="post" id="login-form">
                                                                                         <div class="form-group">
                                                 <label>E-posta Adresi</label>
                                                 <input type="email" name="username" class="form-control" placeholder="E-posta Adresi" />
@@ -282,12 +280,12 @@ $row_settings    = mysqli_fetch_assoc($result_settings);
                                                         <strong>Üye Ol</strong></a> 
                                                 </div>
                                             </div>
-                                                                                    </form>
+                                        </form>
                                     </div>
 
                                     <div class="forget-form-div">
                                         <form action="#" method="post" id="forget-form">
-                                                                                        <div class="form-group">
+                                            <div class="form-group">
                                                 <label>Sisteme Kayıtlı E-posta Adresi</label>
                                                 <input type="email" name="usernamef" class="form-control" placeholder="Sisteme Kayıtlı E-posta Adresi" />
                                             </div>
@@ -305,7 +303,7 @@ $row_settings    = mysqli_fetch_assoc($result_settings);
                                             </div>
                                         </form>
                                     </div>
-                                                            </div>
+                                </div>
                         </li>
                         <li id="cart">
                             <div class="carttrigger">
@@ -319,7 +317,8 @@ $row_settings    = mysqli_fetch_assoc($result_settings);
                                 <div class="table-responsive">
                                     <table class="table table-bordered">
                                     <tr>
-                                    <th width="40%">Ürün Adı</th>
+                                    <th width="10%">Ürün Resim</th>
+                                    <th width="30%">Ürün Adı</th>
                                     <th width="10%">Adet</th>
                                     <th width="20%">Fiyat</th>
                                     <th width="15%">Toplam</th>
@@ -332,15 +331,21 @@ $row_settings    = mysqli_fetch_assoc($result_settings);
                                     foreach($_SESSION["shopping_cart"] as $keys => $values)
                                     {
                                     ?>
-                                    <tr>
-                                    <td><?php echo $values["item_name"]; ?></td>
-                                    <td><?php echo $values["item_quantity"]; ?></td>
-                                    <td>₺ <?php echo $values["item_price"]; ?></td>
-                                    <td>₺ <?php echo number_format($values["item_quantity"] * $values["item_price"], 2);?></td>
-                                    <td><a href="product.php?action=delete&id=<?php echo $values["item_id"]; ?>"><span class="text-danger">Sil</span></a></td>
-                                    </tr>
-                                    <?php
-                                    $total = $total + ($values["item_quantity"] * $values["item_price"]);
+                                        <tr>
+                                        <?php   
+                                                $sql_image    = "select * from image where ID = ".$values["item_image"]."";
+                                                $result_image = mysqli_query($conn,$sql_image);
+                                                $row_image    = mysqli_fetch_assoc($result_image);
+                                        ?>
+                                        <td><img src="<?php echo 'ttadmin/process/'.$row_image["URL"]; ?>"></td>
+                                        <td><?php echo $values["item_name"]; ?></td>
+                                        <td><?php echo $values["item_quantity"]; ?></td>
+                                        <td>₺ <?php echo $values["item_price"]; ?></td>
+                                        <td>₺ <?php echo number_format($values["item_quantity"] * $values["item_price"], 2);?></td>
+                                        <td><a href="product.php?action=delete&id=<?php echo $values["item_id"]; ?>"><span class="text-danger">Sil</span></a></td>
+                                        </tr>
+                                        <?php
+                                        $total = $total + ($values["item_quantity"] * $values["item_price"]);
                                     }
                                     ?>
                                     <tr>
@@ -350,10 +355,21 @@ $row_settings    = mysqli_fetch_assoc($result_settings);
                                     </tr>
                                     <?php
                                     }
-                                    ?>
-                                    
+                                    ?>                                    
                                     </table>
-                                    </div>
+                                        <div class="coupon-area">
+                                            <form action="" method="post">
+                                                <div class="input-group">
+                                                    <input type="text" name="coupon" id="coupon" class="form-control" placeholder="İndirim Kodu" autocomplete="off">
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-info couponbutton" type="button"><span class="fa fa-gift"></span> Kullan</button>
+                                                    </span>
+                                                </div>
+                                            </form>
+                                            <div class="checkout">
+                                            <a href="selling/checkout.php" role="button" class="btn btn-success">Satın Al</a>
+                                            </div>
+                                        </div>
                                 </div>
                             </div>
                         </li>

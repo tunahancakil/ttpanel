@@ -436,13 +436,13 @@ if (!isset($_SESSION['USER'])) {
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="product_insert.php" class="nav-link">
+                <a href="city_insert.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Şehir Ekle</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="product.php" class="nav-link">
+                <a href="city.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Şehir Listele</p>
                 </a>
@@ -458,13 +458,13 @@ if (!isset($_SESSION['USER'])) {
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="product_insert.php" class="nav-link">
+                <a href="district_insert.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>İlçe Ekle</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="product.php" class="nav-link">
+                <a href="district.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>İlçe Listele</p>
                 </a>
@@ -546,13 +546,13 @@ if (!isset($_SESSION['USER'])) {
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="product_insert.php" class="nav-link">
+                <a href="admin_insert.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Yönetici Ekle</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="product.php" class="nav-link">
+                <a href="admin.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Yönetici Listele</p>
                 </a>
@@ -567,30 +567,36 @@ if (!isset($_SESSION['USER'])) {
               </p>
             </a>
             <ul class="nav nav-treeview">
+            <!--
               <li class="nav-item">
                 <a href="settings_logo.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Tasarım & Logo</p>
                 </a>
               </li>
+              -->
+              <!--
               <li class="nav-item">
                 <a href="product.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Fatura Tasarımı</p>
                 </a>
               </li>
+              -->
               <li class="nav-item">
                 <a href="settings.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Genel Ayarlar</p>
                 </a>
               </li>
+              <!--
               <li class="nav-item">
                 <a href="product.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Google - SEO Ayarları</p>
                 </a>
               </li>
+              -->
             </ul>
           </li>
       </nav>
