@@ -38,7 +38,7 @@
                                     echo '<input class="custom-control-input" type="checkbox" name="NEWS" id="NEWS" checked>';
                                 } 
                                 ?>
-                                  <label for="NEWS" class="custom-control-label">Ücretsiz Kargo Olsun</label>
+                                  <label for="NEWS" class="custom-control-label">E Posta ile bilgilendirmek istiyor.</label>
                                 </div>
                         </div>
                     </div>

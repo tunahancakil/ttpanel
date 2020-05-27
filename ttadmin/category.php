@@ -43,6 +43,7 @@
                     <td>
                         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                             <div class="btn-group mr-2" role="group" aria-label="Third group">
+                            <a href="category_update.php?id=<?php echo $row['ID'] ?>">
                             <button type="button" class="btn btn-block bg-gradient-warning btn-xs"><ion-icon size="small" name="document-text-outline"></ion-icon>Düzenle</button>
                             </div>
                             <div class="btn-group mr-2" role="group" aria-label="Third group">

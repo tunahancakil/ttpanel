@@ -1,22 +1,7 @@
-<?php include "header.php";
-    if (isset($_POST['message'])) {
-        echo 'içerde';
-        foreach($_SESSION["shopping_cart"] as $keys => $values)
-        {   
-                $_SESSION["shopping_cart"][$keys]['item_card_note_id'] = $_POST['CARD_ID'];
-                if (isset($_POST['NO_NAME'])) {
-                    if($_POST['NO_NAME'] == 1) {
-                    $_SESSION["shopping_cart"][$keys]['item_custom_cart_notee'] = $_POST['CARD_NOTE'];
-                    }
-                    $_SESSION["shopping_cart"][$keys]['item_custom_cart_notee'] = ''.$_POST['CART_NAME'].''.$_POST['CARD_NOTE'].'';
-                }
-        }
-    }
-?>
+<?php include "header.php"; ?>
 <section id="page" class="offcanvas-pusher" role="main">
     <div id="drilldown"></div>
-        <form action="payment.php" method="post" id="invoice-send-form">
-        <input type="hidden" name="faturabilgileri" value="1">
+        <form action="save/add_order.php" method="post" id="invoice-send-form">
         <div class="container">
             <div class="row mtb20">
                 <a href="#"><img src="../uploads/logo.png" title="" alt="" class="center-block"></a>
@@ -47,11 +32,10 @@
                     <div class="col-lg-4 col-sm-4 mbottom40 col-m64-6">
                         <div class="greybg bordergrey p20">
                             <p class="fs16 mbottom20"><strong>Fatura Bilgileri</strong></p>
-                            <input type="hidden" name="INVOICE_TYPE" id="faturatipi" value="1">
                             <div class="row mbottom5">
                                 <div class="col-xs-6">
                                     <div class="pretty p-icon p-round mbottom20">
-                                        <input type="radio" name="INVOICE_TYPE" value="0" v="1" class="faturatipilinsahis">
+                                        <input type="radio" name="INVOICE_TYPE" value="0" class="faturatipilinsahis">
                                         <div class="state p-primary-o">
                                             <i class="icon mdi mdi-check"></i>
                                             <label>Şahıs Adına</label>
@@ -60,7 +44,7 @@
                                 </div>
                                 <div class="col-xs-6">
                                     <div class="pretty p-icon p-round mbottom20">
-                                        <input type="radio" name="INVOICE_TYPE" value="1" v="2" class="faturatipilinfirma">
+                                        <input type="radio" name="INVOICE_TYPE" value="1"  class="faturatipilinfirma">
                                         <div class="state p-primary-o">
                                             <i class="icon mdi mdi-check"></i>
                                             <label>Firma Adına</label>
@@ -88,19 +72,19 @@
                                     <div class="col-lg-12">
                                         <div class="form-group">
                                             <label>Firma Adı</label>
-                                            <input type="text" class="form-control" placeholder="Firma Adı" name="COMPANY_NAME" value="">
+                                            <input type="text" class="form-control" placeholder="Firma Adı" name="COMPANY_NAME">
                                         </div>
                                         <div class="form-group">
                                             <label>Vergi Dairesi</label>
-                                            <input type="text" class="form-control" placeholder="Vergi Dairesi" name="TAX_OFFICE" value="">
+                                            <input type="text" class="form-control" placeholder="Vergi Dairesi" name="TAX_OFFICE">
                                         </div>
                                         <div class="form-group">
                                             <label>Vergi Numarası</label>
-                                            <input type="text" class="form-control" placeholder="Vergi Numarası" name="INVOICE_IDENTY_NO" value="">
+                                            <input type="text" class="form-control" placeholder="Vergi Numarası" name="COMPANY_INVOICE_IDENTY_NO">
                                         </div>
                                         <div class="form-group">
                                             <label>Fatura Adresi</label>
-                                            <textarea class="form-control" placeholder="Fatura Adresi" name="INVOICE_ADDRESS"></textarea>
+                                            <textarea class="form-control" placeholder="Fatura Adresi" name="COMPANY_INVOICE_ADDRESS"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -136,9 +120,7 @@
                                 <div class="col-xs-12">
                                     <hr>
                                 </div>
-
                             </div>
-                            
                     </div>
                 </div>
             </div>
@@ -149,12 +131,12 @@
                     <a href="message.php" class="btn buybtn" role="button">GERİ</a>
                 </div>
                 <div class="col-lg-6 col-xs-6 mtb20">
-                    <button type="submit" name="payment" class="btn pull-right invoice-send buybtn">İLERLE</button>
+                    <button type="submit" name="invoice" class="btn pull-right invoice-send buybtn">İLERLE</button>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                    <h4>© 2020 Çiçek Filem. Tüm Hakları Saklıdır <a href="../mesafeli-satis-sozlesmesi" target="_blank">Hizmet Sözleşmesi</a></h4>
+                    <h4>© 2020 Çiçek Filem. Tüm Hakları Saklıdır <a href="../page.php?title='mesafeli_satis_sozlesme'" target="_blank">Hizmet Sözleşmesi</a></h4>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
 

@@ -295,15 +295,21 @@ if (!isset($_SESSION['USER'])) {
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="product_insert.php" class="nav-link">
+                <a href="orders.php?status='DELIVERED'" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Ürün Ekle</p>
+                  <p>Bütün Siparişler</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="product.php" class="nav-link">
+                <a href="orders.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Ürün Listele</p>
+                  <p>Teslim Edilen</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="orders.php?status='CANCEL'" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>İptal/İade Edilen</p>
                 </a>
               </li>
             </ul>
@@ -324,31 +330,32 @@ if (!isset($_SESSION['USER'])) {
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="product_insert.php" class="nav-link">
+                <a href="comment_insert.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Yorum Ekle</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="product.php" class="nav-link">
+                <a href="comment.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Tüm Yorumlar</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="product.php" class="nav-link">
+                <a href="comment.php?status=1" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Onaylı Yorumlar</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="product.php" class="nav-link">
+                <a href="comment.php?status=0" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Onaysız Yorumlar</p>
                 </a>
               </li>
             </ul>
           </li>
+          <!--
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
             <i class="nav-icon fas fa-gifts"></i>
@@ -377,6 +384,7 @@ if (!isset($_SESSION['USER'])) {
               </li>
             </ul>
           </li>
+          -->
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
             <i class="nav-icon fas fa-gifts"></i>
@@ -435,12 +443,14 @@ if (!isset($_SESSION['USER'])) {
               </p>
             </a>
             <ul class="nav nav-treeview">
+              <!--
               <li class="nav-item">
                 <a href="city_insert.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Şehir Ekle</p>
                 </a>
               </li>
+              -->
               <li class="nav-item">
                 <a href="city.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -457,12 +467,14 @@ if (!isset($_SESSION['USER'])) {
               </p>
             </a>
             <ul class="nav nav-treeview">
+              <!--
               <li class="nav-item">
                 <a href="district_insert.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>İlçe Ekle</p>
                 </a>
               </li>
+              -->
               <li class="nav-item">
                 <a href="district.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -552,7 +564,7 @@ if (!isset($_SESSION['USER'])) {
                 </a>
               </li>
               <li class="nav-item">
-                <a href="admin.php" class="nav-link">
+                <a href="admin_list.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Yönetici Listele</p>
                 </a>

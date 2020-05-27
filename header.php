@@ -105,7 +105,7 @@ session_start();
 </head>
 <body id="offcanvas-container" class="nokeep-header offcanvas-container layout-fullwidth fs12 page-home ">
     <section id="page" class="offcanvas-pusher" role="main">
-        <div class="st-container" id="st-container">
+        <div class="st-container st-effect-1 st-menu-open" id="st-container">
             <div class="st-menu st-effect-1 mobile-menu" id="closemenu">
                 <div class="skin-classic-light breadcrumbs"></div>
                 <div id="drilldown" class="skin-classic-light">

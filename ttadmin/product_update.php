@@ -13,7 +13,6 @@
                     <ul class="nav nav-pills">
                     <li class="nav-item"><a class="nav-link active" href="#general_data" data-toggle="tab">Genel Bilgiler</a></li>
                     <li class="nav-item"><a class="nav-link" href="#pages" data-toggle="tab">Türkçe Sayfa</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#delivery" data-toggle="tab">Gönderim Bölgeleri</a></li>
                     </ul>
                 </div>
                 <form method="POST" action="process/update.php">
@@ -186,12 +185,6 @@
                             </div>
                             <div class="form-group">
                                 <button type="button" class="btn bg-gradient-primary">Görsel Seç</button>
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="delivery">
-                            <div class="form-group">
-                                <label for="aa">Kargo Yazısı</label>
-                                <input type="number" class="form-control" name="aa" placeholder="Ürün Fiyat">
                             </div>
                         </div>
                         </div>    

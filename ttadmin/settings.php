@@ -26,6 +26,7 @@
                         </div>
                         <div class="form-group">
                             <label for="LOGO">Site Logo</label>
+                            <img src="../<?php echo $row_settings['LOGO'] ?>">
                             <input type="text" class="form-control" name="LOGO" value="<?php echo $row_settings['LOGO'] ?>">
                         </div>
                         <div class="form-group">

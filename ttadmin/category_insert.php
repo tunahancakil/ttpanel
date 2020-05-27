@@ -31,13 +31,13 @@
                             <label class="col-form-label" for="STATUS">Yayına Alınsın Mı?</label>
                             <div class="form-group">
                                 <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" type="radio" name="STATUS" checked>
+                                    <input class="custom-control-input" type="radio" name="STATUS" value="1" checked>
                                     <label for="STATUS" class="custom-control-label">Evet</label>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" type="radio" name="STATUS">
+                                    <input class="custom-control-input" type="radio" name="STATUS" value="0">
                                     <label for="STATUS" class="custom-control-label">Hayır, taslak olarak kaydet</label>
                                 </div>
                             </div>
@@ -50,7 +50,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" type="radio" name="TIME_FORMAT" value="DISTINCT" >
+                                    <input class="custom-control-input" type="radio"  name="TIME_FORMAT" value="DISTINCT" >
                                     <label for="TIME_FORMAT" class="custom-control-label">Tam Saat (17:10)</label>
                                 </div>
                             </div>
@@ -62,7 +62,7 @@
                                         <i class="far fa-calendar-alt"></i>
                                     </span>
                                     </div>
-                                    <input type="text" class="form-control float-right" name="NOT_DELIVERY">
+                                    <input type="text" class="form-control float-right" id="id-date-picker-1" data-date-format="dd-mm-yyyy" name="NOT_DELIVERY">
                                 </div>
                             </div>
                         </div>
@@ -76,8 +76,11 @@
                                     <input type="text" class="form-control" name="URL">
                                 </div>
                                 <div class="form-group">
-                                    <label for="PAGE_TEXT">Türkçe Sayfa Yazısı</label>
-                                    <textarea name="PAGE_TEXT" rows="10" cols="80"></textarea>
+                                    <label for="DESCRIPTION">Kategori Açıklama</label>
+                                    <div class="mb-3">
+                                        <textarea class="textarea" name="DESCRIPTION"
+                                                style="width: 100%; height: 300px; font-size: 14px; line-height: 50px; border: 1px solid #dddddd; padding: 15px;"></textarea>
+                                    </div>
                                 </div>
                                 <!--
                                 <div class="form-group">
@@ -93,9 +96,6 @@
                                     <input type="number" class="form-control" name="URL">
                                 </div>
                                 -->
-                                <div class="form-group">
-                                    <button type="button" class="btn bg-gradient-primary">Görsel Seç</button>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -106,4 +106,5 @@
             </div>
         </div>
     </div>
+
 <?php include("footer.php") ?>

@@ -59,7 +59,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                        <h4>© 2020 TT Yazılım. Tüm Hakları Saklıdır <a href="../mesafeli-satis-sozlesmesi" target="_blank">Hizmet Sözleşmesi</a></h4>
+                        <h4>© 2020 TT Yazılım. Tüm Hakları Saklıdır <a href="../page.php?title='mesafeli_satis_sozlesme'" target="_blank">Hizmet Sözleşmesi</a></h4>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                         <div class="pull-right">

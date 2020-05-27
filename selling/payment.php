@@ -1,26 +1,7 @@
-<?php include "header.php";     
-    if (isset($_POST['payment'])) {
-        foreach($_SESSION["shopping_cart"] as $keys => $values)
-        {   
-            $_SESSION["shopping_cart"][$keys]['item_sender_name']  = $_POST['SENDER_NAME'];
-            $_SESSION["shopping_cart"][$keys]['item_sender_phone'] = $_POST['SENDER_PHONE'];
-            $_SESSION["shopping_cart"][$keys]['item_sender_email'] = $_POST['SENDER_EMAIL'];
-                if (isset($_POST['INVOICE_TYPE'])) {
-                    if($_POST['INVOICE_TYPE'] == 0) {
-                    $_SESSION["shopping_cart"][$keys]['item_invoice_identy_no'] = $_POST['INVOICE_IDENTY_NO'];
-                    $_SESSION["shopping_cart"][$keys]['item_invoice_address'] = $_POST['INVOICE_ADDRESS'];
-                    }
-                    $_SESSION["shopping_cart"][$keys]['item_invoice_identy_no']     = $_POST['INVOICE_IDENTY_NO'];
-                    $_SESSION["shopping_cart"][$keys]['item_invoice_address']       = $_POST['INVOICE_ADDRESS'];
-                    $_SESSION["shopping_cart"][$keys]['item_invoice_company_name']  = $_POST['COMPANY_NAME'];
-                    $_SESSION["shopping_cart"][$keys]['item_invoice_tax_office']    = $_POST['TAX_OFFICE'];
-                }
-        }
-    }
-?>
+<?php include "header.php"; ?>
     <section id="page" class="offcanvas-pusher" role="main">
         <div id="drilldown"></div>
-            <form action="thanks.php" method="post" id="pay-send-form">
+            <form action="save/add_order.php" method="post" id="pay-send-form">
             <input type="hidden" name="odemeform" value="1">
                         <input type="hidden" name="paytype" id="paytype" value="1">
                         <div class="container">
@@ -37,7 +18,8 @@
                                     <div class="responsive-tabs-container accordion-xs"><ul class="nav nav-tabs responsive resptabs" role="tablist" id="paytab">
                                         <li class="active"><a href="#kart" class="paytypelincard" v="1"><span class="fa fa-credit-card"></span> <strong>KART İLE ÖDEME</strong></a></li>
                                         <li><a href="#havale" class="paytypelineft" v="2"><span class="fa fa-exchange"></span> <strong>HAVALE İLE ÖDEME</strong></a></li>
-                                    </ul><div class="tab-content responsive">
+                                        </ul>
+                                        <div class="tab-content responsive">
 
                                         <a href="#kart" class="paytypelincard accordion-link active first" v="1"><span class="fa fa-credit-card"></span> <strong>KART İLE ÖDEME</strong></a><div class="tab-pane active" id="kart">
                                             <div class="row">
@@ -48,7 +30,7 @@
                                                     <!-- Ödeme formunun açılması için gereken HTML kodlar / Bitiş -->
                                             </div>
                                             <h2><strong><span class="text-danger">Toplam Tutar:</span> 112,10 TL</strong></h2>
-                                            <button type="submit" class="btn buybtn pay-send-card btn-lg">ÖDEME YAP</button>
+                                            <button type="submit" name = "paymentCard" class="btn buybtn pay-send-card btn-lg">ÖDEME YAP</button>
                                         </div>
                                         <a href="#havale" class="paytypelineft accordion-link last" v="2"><span class="fa fa-exchange"></span> <strong>HAVALE İLE ÖDEME</strong></a><div class="tab-pane" id="havale">
                                             <div class="row">
@@ -88,7 +70,7 @@
                                                     <p>Havale veya EFT işlemini yaparken açıklama kısmına sipariş numaranızı yazınız.</p>
                                                     <p>Siparişinizi tamamlamak için "Sipariş Ver" butonuna basınız.</p>
                                                     <h2><strong><span class="text-danger">Toplam Tutar:</span> 112,10 TL</strong></h2>
-                                                    <button type="submit" class="btn buybtn pay-send-eft btn-lg">SİPARİŞ VER</button>
+                                                    <button type="submit" name = "paymentTransfer" class="btn buybtn pay-send-eft btn-lg">SİPARİŞ VER</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -112,7 +94,6 @@
                                                                                 <div class="row fs11">
                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">Avcılar - Cihangir Mahallesi - 25/05/2020</div>
                                             </div>
-
                                                                                 <div class="row mt10">
                                             <div class="col-lg-6 col-md-4 col-sm-4 col-xs-8 col-m32-7 col-m48-7 col-m64-8"><strong>KDV Dahil:</strong></div>
                                             <div class="col-lg-6 col-md-4 col-sm-4 col-xs-4 col-m32-5 col-m48-5 col-m64-4"><strong><span class="birimfiyat">112,10</span> TL</strong></div>
@@ -125,21 +106,19 @@
                                     <div class="col-xs-12">
                                         <hr>
                                     </div>
-
                                 </div>
-                                                    </div>
+                        </div>
                     </div>
                     <div class="row mtb20">
                         <div class="col-lg-12">
                             <div class="greybg bordergrey p20">
                                 <div class="pretty p-icon p-round mbottom20">
-                                    <input type="checkbox" id="sozlesme" name="sozlesme" value="1" checked="">
+                                    <input type="checkbox" id="sozlesme" name="IS_ONLINE_CONTRACT" value="1">
                                     <div class="state p-primary-o">
                                         <i class="icon mdi mdi-check"></i>
                                         <label>Mesafeli satış sözleşmesini okudum, kabul ediyorum.</label>
                                     </div>
                                 </div>
-
                                 <div class="sozlesme-div">
                                     Sözleşme gelecek
                                 </div>
@@ -155,7 +134,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                        <h4>© 2020 TT Yazılım. Tüm Hakları Saklıdır <a href="../mesafeli-satis-sozlesmesi" target="_blank">Hizmet Sözleşmesi</a></h4>
+                        <h4>© 2020 TT Yazılım. Tüm Hakları Saklıdır <a href="../page.php?title='mesafeli_satis_sozlesme'" target="_blank">Hizmet Sözleşmesi</a></h4>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                         <div class="pull-right">

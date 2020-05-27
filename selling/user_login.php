@@ -1,7 +1,6 @@
 <?php include "header.php" 
 
 ?>
-
     <section id="page" class="offcanvas-pusher" role="main">
         <div id="drilldown"></div>    
         <div class="container">
@@ -26,16 +25,12 @@
                                     <input type="password" name="password" class="form-control" placeholder="******">
                                 </div>
                                 <input type="hidden" name="giris" value="1">
-
                                 <div class="clearfix">
                                     <a href="javascript:void(0);" class="text-danger return-forget pull-right mbottom20">
-                                        <i class="fa fa-angle-right"></i>&nbsp;<strong>Şifremi Unuttum</strong>
-                                    </a> 
+                                        <i class="fa fa-angle-right"></i>&nbsp;<strong>Şifremi Unuttum</strong></a> 
                                 </div>
                                 <div class="clearfix">
-                                    <button type="submit" class="btn buybtn login-btn center-block">
-                                            Giriş Yap</button>
-                                                                </div>
+                                    <button type="submit" class="btn buybtn login-btn center-block">Giriş Yap</button></div>
                             </form>
                             <div class="clearfix">
                                 <form action="customer_info.php" method="post"> 
@@ -43,7 +38,6 @@
                                     <button type="submit" class="btn buybtn2 continueguestbtn center-block">Üye Olmadan Devam Et</button>
                                 </form>
                             </div>
-
                         </div>
                         <!--
                         <div class="greybg bordergrey forget-form-div p20">
@@ -71,20 +65,18 @@
                         </div>
                         -->
                     </div>
-                                </div>
+                </div>
             </div>
         </div>
-
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 mtb20">
                     <a href="../satinal/ek-urunler" class="btn buybtn" role="button">GERİ</a>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
-                    <h4>© 2020 TT Yazılım. Tüm Hakları Saklıdır <a href="../mesafeli-satis-sozlesmesi" target="_blank">Hizmet Sözleşmesi</a></h4>
+                    <h4>© 2020 TT Yazılım. Tüm Hakları Saklıdır <a href="../page.php?title='mesafeli_satis_sozlesme'" target="_blank">Hizmet Sözleşmesi</a></h4>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                     <div class="pull-right">

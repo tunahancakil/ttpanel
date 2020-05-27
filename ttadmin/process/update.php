@@ -1,33 +1,25 @@
 <?php include("../connect/connection.php") ?>
 <?php
-//Category insert
-if($_POST['editType'] === 'Category') {
-    $title = $_POST['TITLE'];
-    $url = $_POST['URL'];
-    $description = $_POST['DESCRIPTION'];
+//Category update
+if(isset($_POST['category_update'])) {
     $timeFormat = $_POST['TIME_FORMAT'];
-    $sql="select TITLE from category WHERE TITLE='$title'";
-    $result  =mysqli_query($conn,$sql);
-    $rowcount=mysqli_num_rows($result);
+    $notDelivery = $_POST['NOT_DELIVERY'];
+    $title = $_POST['TITLE'];
+    $description = $_POST['DESCRIPTION'];
 
-    if ($rowcount>0)
-    {
-    echo "Bu isimde menü daha önce kayıt edilmiştir.";
-    } 
-    else
-    {
-    $sqlinsert="INSERT INTO category ( TITLE, TIME_FORMAT, URL, DESCRIPTION)
-    VALUES ('$title','$timeFormat','$url','$description')";
-     
+    $sqlinsert='UPDATE category SET TIME_FORMAT = '.$timeFormat.', TITLE = '.$title.', DESCRIPTION = '.$description.' WHERE ID = '.$_POST['ID'].' ';
     $result=mysqli_query($conn,$sqlinsert);
      
-    if ($result==0)
+    if ($result==0) {
     echo "Eklenemedi, kontrol ediniz";
-    else
+    header('Location:../category.php?action=no');
+    } else {
     echo "Başarıyla eklendi";
-    };
-}
+    header('Location:../category.php?action=yes');
+    }
+};
 
+//Product update
 if($_POST['editType'] === 'Product') {
     $title = $_POST['TITLE'];
     $category_list = $_POST['CATEGORY'];

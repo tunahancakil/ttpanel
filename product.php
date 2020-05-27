@@ -25,6 +25,8 @@ if(isset($_POST["add_to_cart"]))
             'item_is_delivery'         =>  $_POST["hidden_is_delivery"],
             'item_quantity'            =>  $_POST["quantity"],
             'item_image'               =>  $_POST["productImage"],
+            'item_reference_no'        =>  "",
+            /*
             'item_customer_name'       =>  "",
             'item_customer_phone'      =>  "",
             'item_customer_address'    =>  "",
@@ -40,6 +42,7 @@ if(isset($_POST["add_to_cart"]))
             'item_invoice_company_name'=>  "",
             'item_invoice_tax_office'  =>  "",
             'item_is_onlince_contract' =>  ""
+            */
             );
             $_SESSION["shopping_cart"][$count] = $item_array;
             echo '<script>window.location="product.php?id='.$_GET["id"].'"</script>';

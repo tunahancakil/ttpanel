@@ -45,19 +45,14 @@
                             <div class="col-m32-8 p0">
                                 <p class="text-center sameday vcenter"><span webicon="stroke7:clock" class="wh18"></span> Aynı Gün Teslimat</p>
                                 <a href="<?php echo 'product.php?id='.$row['ID'].''?>" class="vcenter name vcenterparent"><?php echo $row['TITLE']?> </a>
-                                <div class="group-item"> 
-                                    <div class="price-cart">
-                                        <div class="price text-center">
-                                        <?php if (empty($row['DISCOUNT_PRICE'])) { echo '
-                                            <div class="price-new"><span>'.substr($row['PRICE'],0,strpos($row['PRICE'], ".")).'</span> 
-                                            <span><small>,'.substr($row['PRICE'],strpos($row['PRICE'], ".")).' TL<small></small>
-                                            <small>+ KDV</small></small></span></div>';
-                                        }else {
-                                            echo '<div class="price-old"><span>'.substr($row['PRICE'],0,strpos($row['PRICE'], ".")).' </span> <span><small>,'.substr($row['PRICE'],strpos($row['PRICE'], ".")).' TL<small></small><small>+ KDV</small></small></span></div> 
-                                            <div class="price-new"><span>'.substr($row['DISCOUNT_PRICE'],0,strpos($row['DISCOUNT_PRICE'], ".")).'</span> <span><small>,'.substr($row['DISCOUNT_PRICE'],strpos($row['DISCOUNT_PRICE'], ".")).' TL<small></small><small>+ KDV</small></small></span></div>';
-                                        } ?>
-                                        </div>
-                                    </div>
+                                <div class="price text-center">
+                                <?php if (!empty($row['DISCOUNT_PRICE'])) { ?>                                                                                                           
+                                    <div class="price-old"><span><?php echo substr($row['PRICE'],0,strpos($row['PRICE'], ".")) ?></span> 
+                                    <span><small><?php echo substr($row['PRICE'],strpos($row['PRICE'], ".")) ?> TL<small></small><small>+ KDV</small></small></span></div> 
+                                    <div class="price-new"><span><?php echo substr($row['DISCOUNT_PRICE'],0,strpos($row['DISCOUNT_PRICE'], ".")) ?></span> <span><small>,<?php substr($row['DISCOUNT_PRICE'],strpos($row['DISCOUNT_PRICE'], ".")) ?> TL<small></small><small>+ KDV</small></small></span></div>
+                                <?php } else { ?>
+                                    <div class="price-new"><span><?php echo substr($row['DISCOUNT_PRICE'],0,strpos($row['DISCOUNT_PRICE'], ".")) ?></span> <span><small>,<?php substr($row['DISCOUNT_PRICE'],strpos($row['DISCOUNT_PRICE'], ".")) ?> TL<small></small><small>+ KDV</small></small></span></div>
+                                <?php } ?>
                                 </div>
                             </div>
                         </div>

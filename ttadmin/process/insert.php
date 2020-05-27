@@ -4,7 +4,11 @@ if(isset($_POST['page'])==true) {
     $status = $_POST['STATUS'];
     $title = $_POST['TITLE'];
     $description = $_POST['DESCRIPTION'];
-    $url = $_POST['URL'];
+    if (isset($_POST['URL'])) {
+        $url = $_POST['URL'];
+    } else {
+        $url =  str_replace(' ', '-', strtolower($title));
+    }
     $sql="select TITLE from page WHERE TITLE='$title' and ACTIVE=1";
     $result  =mysqli_query($conn,$sql);
     $rowcount=mysqli_num_rows($result);
@@ -31,16 +35,19 @@ if(isset($_POST['page'])==true) {
 }
 //Category insert
 if(isset($_POST['category'])==true) {
-    $mainCategory = $_POST['MAIN_CATEGORY'];
+
+    if ($_POST['MAIN_CATEGORY'] == 0) {
+        $isMain = 1;
+    } else {
+        $isMain = 0;
+    }
     $status = $_POST['STATUS'];
     $timeFormat = $_POST['TIME_FORMAT'];
-    $notDelivery = $_POST['NOT_DELIVERY'];
     $title = $_POST['TITLE'];
     $description = $_POST['DESCRIPTION'];
-    $pageText = $_POST['PAGE_TEXT'];
-    $sql="select TITLE from category WHERE TITLE='$title' and ACTIVE=1";
-    $result  =mysqli_query($conn,$sql);
-    $rowcount=mysqli_num_rows($result);
+    $sql        ="select TITLE from category WHERE TITLE='$title' and ACTIVE=1";
+    $result     =mysqli_query($conn,$sql);
+    $rowcount   =mysqli_num_rows($result);
 
     if ($rowcount>0)
     {
@@ -48,15 +55,18 @@ if(isset($_POST['category'])==true) {
     } 
     else
     {
-    $sqlinsert="INSERT INTO category (MAIN_CATEGORY,STATUS,TIME_FORMAT,NOT_DELIVERY,TITLE,DESCRIPTION,PAGE_TEXT)
-    VALUES ('$mainCategory',$status,'$timeFormat',$notDelivery,'$title','$description','$pageText')";
-     
+    $sqlinsert='INSERT INTO category (IS_MAIN,STATUS,TIME_FORMAT,TITLE,DESCRIPTION)
+    VALUES ('.$isMain.','.$status.',"'.$timeFormat.'","'.$title.'","'.$description.'")';
     $result=mysqli_query($conn,$sqlinsert);
      
-    if ($result==0)
+    if ($result==0) {
     echo "Eklenemedi, kontrol ediniz";
-    else
+    echo $sqlinsert;
+    //header('Location:../category_insert.php?action=no');
+    } else {
     echo "Başarıyla eklendi";
+    header('Location:../category_insert.php?action=yes');
+    }
     };
 }
 //Product insert
@@ -118,12 +128,14 @@ if(isset($_POST['product'])==true) {
     VALUES ($row[0], $mainCategory, 1)";
     $result_product_category_main=mysqli_query($conn,$sqlinsert_category_main);
     include "upload.php";
-    if ($result_product==0 || $result_product_category==0 ||  $result_product_category_main==0)
+    if ($result_product==0 || $result_product_category==0 ||  $result_product_category_main==0) {
     echo "Eklenemedi, kontrol ediniz";
-    else
+    header('Location:../product_insert.php?action=no');
+    } else {
     echo "Başarıyla eklendi";
+    header('Location:../product.php?action=yes');
+    }
     };
-
 }
 
 //Bank insert
@@ -147,10 +159,13 @@ if(isset($_POST['bank'])==true) {
     VALUES ('$bankName',$departmentNo,'$accountName',$accountNo,$iban)";
     $result=mysqli_query($conn,$sqlinsert);
      
-    if ($result==0)
+    if ($result==0) {
     echo "Eklenemedi, kontrol ediniz";
-    else
+    header('Location:../bank_insert.php?action=no');
+    } else{
     echo "Başarıyla eklendi";
+    header('Location:../bank_insert.php?action=yes');
+    }
     };
 }
 //Menu insert

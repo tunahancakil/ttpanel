@@ -15,7 +15,9 @@
                     <ul class="nav nav-pills">
                     <li class="nav-item"><a class="nav-link active" href="#general_data" data-toggle="tab">Genel Bilgiler</a></li>
                     <li class="nav-item"><a class="nav-link" href="#pages" data-toggle="tab">Türkçe Sayfa</a></li>
+                    <!--
                     <li class="nav-item"><a class="nav-link" href="#delivery" data-toggle="tab">Gönderim Bölgeleri</a></li>
+                    -->    
                     </ul>
                 </div>
                 <form method="POST" id="save" action="process/insert.php" enctype="multipart/form-data">
@@ -165,12 +167,14 @@
                                 <input type="file" name="file-input[]" id="file-input" multiple />
                                 <div id="thumb-output"></div>
                         </div>
+                        <!--
                         <div class="tab-pane" id="delivery">
                             <div class="form-group">
                                 <label for="aa">Kargo Yazısı</label>
                                 <input type="number" class="form-control" name="aa" placeholder="Ürün Fiyat">
                             </div>
                         </div>
+                        -->
                         </div>    
                     </div>
                     <div class="card-footer">
