@@ -1,25 +1,65 @@
-<?php include("../connect/connection.php") ?>
-<?php
-//Category update
-if(isset($_POST['category_update'])) {
-    $timeFormat = $_POST['TIME_FORMAT'];
-    $notDelivery = $_POST['NOT_DELIVERY'];
+<?php include("../connect/connection.php");
+//Page update
+if(isset($_POST['pageUpdate'])) {
+    $status = $_POST['STATUS'];
     $title = $_POST['TITLE'];
+    $url = $_POST['URL'];
     $description = $_POST['DESCRIPTION'];
 
-    $sqlinsert='UPDATE category SET TIME_FORMAT = '.$timeFormat.', TITLE = '.$title.', DESCRIPTION = '.$description.' WHERE ID = '.$_POST['ID'].' ';
+    $sqlinsert='UPDATE page SET STATUS = '.$status.', TITLE = "'.$title.'", URL = "'.$url.'", DESCRIPTION = "'.$description.'" WHERE ID = '.$_POST['ID'].' ';
     $result=mysqli_query($conn,$sqlinsert);
      
     if ($result==0) {
-    echo "Eklenemedi, kontrol ediniz";
-    header('Location:../category.php?action=no');
+    header('Location:../page_update.php?action=no');
     } else {
-    echo "Başarıyla eklendi";
-    header('Location:../category.php?action=yes');
+    header('Location:../page.php?action=yes');
+    }
+};
+//Bank update
+if(isset($_POST['bankUpdate'])) {
+    $bankName    = $_POST['BANK_NAME'];
+    $departmentNo= $_POST['DEPARTMENT_NO'];
+    $accountNo   = $_POST['ACCOUNT_NO'];
+    $accountName = $_POST['ACCOUNT_NAME'];
+    $iban        = $_POST['IBAN'];
+    $sqlinsert='UPDATE bank 
+                SET BANK_NAME = "'.$bankName.'", DEPARTMENT_NO = '.$departmentNo.', ACCOUNT_NO = '.$accountNo.', ACCOUNT_NAME = "'.$accountName.'",
+                IBAN = "'.$iban.'"
+                WHERE ID = '.$_POST['ID'].' ';
+    $result=mysqli_query($conn,$sqlinsert);
+     
+    if ($result==0) {
+        header('Location:../bank_update.php?action=no');
+    } else {
+        header('Location:../bank.php?action=yes');
+    }
+};
+//Category update
+if(isset($_POST['categoryUpdate'])) {
+    $mainCategory   = $_POST['MAIN_CATEGORY'];
+    $status         = $_POST['STATUS'];
+    $timeFormat     = $_POST['TIME_FORMAT'];
+    $title          = $_POST['TITLE'];
+    $url            = $_POST['URL'];
+    $description    = $_POST['DESCRIPTION'];
+    $notDelivery    = $_POST['NOT_DELIVERY'];
+    $rowOrder       = $_POST['ROW_ORDER'];
+
+    $sqlinsert='UPDATE category 
+                SET STATUS = '.$status.', TIME_FORMAT = "'.$timeFormat.'", TITLE = "'.$title.'", URL = "'.$url.'", DESCRIPTION = "'.$description.'",
+                NOT_DELIVERY = "'.$notDelivery.'", ROW_ORDER = '.$rowOrder.'
+                WHERE ID = '.$_POST['ID'].' ';
+    $result=mysqli_query($conn,$sqlinsert);
+     
+    if ($result==0) {
+        header('Location:../category.php?action=no');
+    } else {
+        header('Location:../category.php?action=yes');
     }
 };
 
 //Product update
+/*
 if($_POST['editType'] === 'Product') {
     $title = $_POST['TITLE'];
     $category_list = $_POST['CATEGORY'];
@@ -50,4 +90,5 @@ if($_POST['editType'] === 'Product') {
     else 
     echo "Başarıyla eklendi";
 }
+*/
 ?>

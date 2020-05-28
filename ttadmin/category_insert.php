@@ -28,42 +28,52 @@
                                 </select>
                                 </div>
                             </div>
-                            <label class="col-form-label" for="STATUS">Yayına Alınsın Mı?</label>
+                            <label class="col-form-label" for="STATUS">Yayına Alınsın Mı ?</label>
                             <div class="form-group">
                                 <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" type="radio" name="STATUS" value="1" checked>
-                                    <label for="STATUS" class="custom-control-label">Evet</label>
+                                    <input class="custom-control-input" type="radio" id="ACTIVE" name="STATUS" value="1" checked required>
+                                    <label for="ACTIVE" class="custom-control-label">Evet</label>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" type="radio" name="STATUS" value="0">
-                                    <label for="STATUS" class="custom-control-label">Hayır, taslak olarak kaydet</label>
+                                    <input class="custom-control-input" type="radio" id="NO_ACTIVE" value="0" name="STATUS" required>
+                                    <label for="NO_ACTIVE" class="custom-control-label">Hayır, taslak olarak kaydet</label>
                                 </div>
                             </div>
-                            <label class="col-form-label" for="inputError">Saat Formatı</label>
+                            <label class="col-form-label" for="TIME_FORMAT">Saat Aralığı</label>
                             <div class="form-group">
                                 <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" type="radio" name="TIME_FORMAT" value="BETWEEN" checked>
-                                    <label for="TIME_FORMAT" class="custom-control-label">Aralıklı Saat (09:00 - 13:00)</label>
+                                    <input class="custom-control-input" type="radio" id="BETWEEN" name="TIME_FORMAT" value="BETWEEN" checked required>
+                                    <label for="BETWEEN" class="custom-control-label">Güniçi Teslimat(09:00-18:00)</label>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="custom-control custom-radio">
-                                    <input class="custom-control-input" type="radio"  name="TIME_FORMAT" value="DISTINCT" >
-                                    <label for="TIME_FORMAT" class="custom-control-label">Tam Saat (17:10)</label>
+                                    <input class="custom-control-input" type="radio" id="ON_TIME" name="TIME_FORMAT" value="ON_TIME" required>
+                                    <label for="ON_TIME" class="custom-control-label">Tam Saat (17:20)</label>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label>Seçili Tarihlerde Kategoriye Bağlı Ürünlerde Teslimat Yapılmasın</label>
+                                <label>Date range:</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                     <span class="input-group-text">
                                         <i class="far fa-calendar-alt"></i>
                                     </span>
                                     </div>
-                                    <input type="text" class="form-control float-right" id="id-date-picker-1" data-date-format="dd-mm-yyyy" name="NOT_DELIVERY">
+                                    <input type="text" name="NOT_DELIVERY" class="form-control float-right" id="reservation">
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                  <input class="custom-control-input" type="checkbox" name="IS_MAIN" id="IS_MAIN">
+                                  <label for="IS_MAIN" class="custom-control-label">Ana Sayfada Gösterilsin</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                    <label for="ROW_ORDER">Ana Sayfa Sırası</label>
+                                    <input type="number" class="form-control" name="ROW_ORDER">
                             </div>
                         </div>
                             <div class="tab-pane" id="pages">
@@ -78,24 +88,10 @@
                                 <div class="form-group">
                                     <label for="DESCRIPTION">Kategori Açıklama</label>
                                     <div class="mb-3">
-                                        <textarea class="textarea" name="DESCRIPTION"
-                                                style="width: 100%; height: 300px; font-size: 14px; line-height: 50px; border: 1px solid #dddddd; padding: 15px;"></textarea>
+                                        <textarea class="textarea" name="DESCRIPTION" style="width: 100%; height: 300px; font-size: 14px; line-height: 50px; border: 1px solid #dddddd; padding: 15px;">
+                                        </textarea>
                                     </div>
                                 </div>
-                                <!--
-                                <div class="form-group">
-                                    <label for="URL">Türkçe Sayfa Başlık (SEO)</label>
-                                    <input type="number" class="form-control" name="URL">
-                                </div>
-                                <div class="form-group">
-                                    <label for="URL">Türkçe Meta Keywords (SEO)</label>
-                                    <input type="number" class="form-control" name="URL">
-                                </div>
-                                <div class="form-group">
-                                    <label for="URL">Türkçe Meta Description (SEO)</label>
-                                    <input type="number" class="form-control" name="URL">
-                                </div>
-                                -->
                             </div>
                         </div>
                     </div>
@@ -106,5 +102,4 @@
             </div>
         </div>
     </div>
-
 <?php include("footer.php") ?>

@@ -13,6 +13,8 @@ if (!isset($_SESSION['USER'])) {
   <script src="https://kit.fontawesome.com/981f261072.js" crossorigin="anonymous"></script>
   <!-- ionicons -->
   <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+  <!-- daterange picker -->
+  <link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker.css">
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->

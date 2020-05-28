@@ -30,7 +30,7 @@
                     <?php
                         echo '<td>'.$row_menu['DISTRICT_NAME'].'</td>';
                         echo '<td>'.$row_menu['PLATE_NO'].'</td>';
-                        echo '<td>'.$row_menu['TOLL_ROAD'].'</td>';
+                        echo '<td>'.$row_menu['TOLL_ROAD'].' ₺</td>';
                         echo '</tr>';
                         }
                     ?>

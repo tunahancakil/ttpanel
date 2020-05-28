@@ -4,11 +4,11 @@
         <div class="card-body table-responsive p-8">
         <div class="card">
         <?php 
-            $sql_bank = "select * from bank where ACTIVE = 1";
+            $sql_bank    = "select * from bank where ACTIVE = 1 and ID = ".$_GET['id']."";
             $result_bank = mysqli_query($conn,$sql_bank);
-            $row_bank=mysqli_fetch_assoc($result_bank);
+            $row_bank    = mysqli_fetch_assoc($result_bank);
         ?>
-                <form method="POST" action="process/insert.php">
+                <form method="POST" action="process/update.php">
                     <div class="card-body">
                         <div class="form-group">
                             <label for="BANK_NAME">Banka Adı</label>
@@ -31,9 +31,9 @@
                             <input type="text" class="form-control" name="IBAN" value="<?php echo $row_bank['IBAN'] ?>">
                         </div>
                     </div>
-                    <input type="hidden" name="insertType" value="Category">
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Kaydet</button>
+                    <input type="hidden" name="ID" value="<?php echo $row_bank['ID']?>">
+                        <button type="submit" name="bankUpdate" class="btn btn-primary">Kaydet</button>
                     </div>
                 </form>
             </div>

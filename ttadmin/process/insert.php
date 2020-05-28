@@ -35,38 +35,38 @@ if(isset($_POST['page'])==true) {
 }
 //Category insert
 if(isset($_POST['category'])==true) {
-
-    if ($_POST['MAIN_CATEGORY'] == 0) {
+    $mainCategory   = $_POST['MAIN_CATEGORY'];
+    if ($_POST['IS_MAIN'] == "on") {
         $isMain = 1;
     } else {
         $isMain = 0;
     }
-    $status = $_POST['STATUS'];
-    $timeFormat = $_POST['TIME_FORMAT'];
-    $title = $_POST['TITLE'];
-    $description = $_POST['DESCRIPTION'];
-    $sql        ="select TITLE from category WHERE TITLE='$title' and ACTIVE=1";
-    $result     =mysqli_query($conn,$sql);
-    $rowcount   =mysqli_num_rows($result);
-
+    $status         = $_POST['STATUS'];
+    $timeFormat     = $_POST['TIME_FORMAT'];
+    $title          = $_POST['TITLE'];
+    $url            = $_POST['URL'];
+    $description    = $_POST['DESCRIPTION'];
+    $notDelivery    = $_POST['NOT_DELIVERY'];
+    $rowOrder       = $_POST['ROW_ORDER'];
+    $sql            = "select TITLE from category WHERE TITLE='$title' and ACTIVE=1";
+    $result         = mysqli_query($conn,$sql);
+    $rowcount       = mysqli_num_rows($result);
     if ($rowcount>0)
     {
-    echo "Bu isimde menü daha önce kayıt edilmiştir.";
-    } 
-    else
-    {
-    $sqlinsert='INSERT INTO category (IS_MAIN,STATUS,TIME_FORMAT,TITLE,DESCRIPTION)
-    VALUES ('.$isMain.','.$status.',"'.$timeFormat.'","'.$title.'","'.$description.'")';
-    $result=mysqli_query($conn,$sqlinsert);
-     
-    if ($result==0) {
-    echo "Eklenemedi, kontrol ediniz";
-    echo $sqlinsert;
-    //header('Location:../category_insert.php?action=no');
+        echo "Bu isimde menü daha önce kayıt edilmiştir.";
     } else {
-    echo "Başarıyla eklendi";
-    header('Location:../category_insert.php?action=yes');
-    }
+        $sqlinsert='INSERT INTO category (IS_MAIN,STATUS,TIME_FORMAT,TITLE,URL,DESCRIPTION,NOT_DELIVERY,ROW_ORDER)
+        VALUES ('.$isMain.','.$status.',"'.$timeFormat.'","'.$title.'","'.$url.'","'.$description.'",'.$notDelivery.','.$rowOrder.')';
+        $result=mysqli_query($conn,$sqlinsert);
+        
+        if ($result==0) {
+        echo $sqlinsert;   
+        echo "Eklenemedi, kontrol ediniz";
+        //header('Location:../category_insert.php?action=no');
+        } else {
+        echo "Başarıyla eklendi";
+        header('Location:../category_insert.php?action=yes');
+        }
     };
 }
 //Product insert

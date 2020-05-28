@@ -47,7 +47,9 @@
                             <button type="button" class="btn btn-block bg-gradient-warning btn-xs"><ion-icon size="small" name="document-text-outline"></ion-icon>Düzenle</button>
                             </div>
                             <div class="btn-group mr-2" role="group" aria-label="Third group">
+                            <a href="process/delete.php?categoryId=<?php echo $row['ID'] ?>">
                             <button type="button" class="btn btn-block bg-gradient-danger btn-xs"><ion-icon size="small" name="trash-outline"></ion-icon>Sil</button>
+                            </a>
                             </div>
                         </div>
                     </td>

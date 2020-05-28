@@ -30,11 +30,11 @@
                             <div class="tab-pane" id="pages">
                                 <div class="form-group">
                                     <label for="TITLE">Türkçe Kategori Adı</label>
-                                    <input type="text" class="form-control" name="TITLE">
+                                    <input type="text" id="title" class="form-control" name="TITLE">
                                 </div>
                                 <div class="form-group">
                                     <label for="URL">Türkçe İsteğe bağlı URL</label>
-                                    <input type="text" class="form-control" name="URL">
+                                    <input type="text" id="href" class="form-control" name="URL">
                                 </div>
                                 <div class="form-group">
                                     <label for="DESCRIPTION">Türkçe Ürün Yazısı</label>
@@ -46,9 +46,8 @@
                             </div>
                         </div>
                     </div>
-                    <input type="hidden" name="insertType" value="Page">
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Kaydet</button>
+                        <button type="submit" name="page" class="btn btn-primary">Kaydet</button>
                     </div>
                 </form>
             </div>
