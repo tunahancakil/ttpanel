@@ -18,13 +18,10 @@
                 <div class="card-header p-2">
                     <ul class="nav nav-pills">
                     <li class="nav-item"><a class="nav-link active" href="#general_data" data-toggle="tab">Genel Bilgiler</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#pages" data-toggle="tab">Türkçe Sayfa</a></li>
-                    <!--
-                    <li class="nav-item"><a class="nav-link" href="#delivery" data-toggle="tab">Gönderim Bölgeleri</a></li>
-                    -->    
+                    <li class="nav-item"><a class="nav-link" href="#pages" data-toggle="tab">Türkçe Sayfa</a></li>   
                     </ul>
                 </div>
-                <form method="POST" id="save" action="process/insert.php" enctype="multipart/form-data">
+                <form method="POST" id="save" action="process/update.php" enctype="multipart/form-data">
                     <div class="card-body">
                         <div class="tab-content">
                         <div class="active tab-pane" id="general_data">
@@ -33,11 +30,15 @@
                                 <div class="select2-purple">
                                 <select name="MAIN_CATEGORY" class="form-control select2bs4" style="width: 100%;">
                                     <?php
-                                        $sql = "select ID,TITLE from category where ACTIVE = 1";
+                                        $sql    = 'select * from category_product where PRODUCT_ID = '.$_GET['id'].' AND IS_MAIN = 1';
                                         $result = mysqli_query($conn,$sql);
-                                        while($row=mysqli_fetch_array($result)) {
-                                        echo '<option value="'.$row['ID'].'">'.$row['TITLE'].'</option>';
-                                        }
+                                        $row    = mysqli_fetch_assoc($result) ;
+
+                                        $sql_category    = 'select * from category where ID ='.$row['CATEGORY_ID'].'';
+                                        $result_category = mysqli_query($conn,$sql_category);
+                                        $row_category    = mysqli_fetch_assoc($result_category);
+
+                                        echo '<option value="'.$row['CATEGORY_ID'].'">'.$row_category['TITLE'].'</option>';
                                     ?>
                                 </select>
                                 </div>
@@ -47,62 +48,105 @@
                                 <div class="select2-purple">
                                 <select name="CATEGORY[]" class="select2bs4" multiple="multiple" data-placeholder="Kategori Seçimi Yapınız" style="width: 100%;">
                                     <?php
-                                        $sql = "select ID,TITLE from category where ACTIVE = 1";
+                                        $sql = 'select * from category_product where PRODUCT_ID = '.$_GET['id'].' AND IS_MAIN != 1';
                                         $result = mysqli_query($conn,$sql);
                                         while($row=mysqli_fetch_array($result)) {
-                                        echo '<option value="'.$row['ID'].'">'.$row['TITLE'].'</option>';
+
+                                            $sql_category    = 'select * from category where ID ='.$row['CATEGORY_ID'].'';
+                                            $result_category = mysqli_query($conn,$sql_category);
+                                            $row_category    = mysqli_fetch_assoc($result_category);
+                                        echo '<option value="'.$row['CATEGORY_ID'].'" selected>'.$row_category['TITLE'].'</option>';
                                         }
                                     ?>
                                 </select>
                             </div>
                             </div>
                             <label class="col-form-label" for="inputError"> Ürün Tipi</label>
+                            <?php if($row_product['PRODUCT_TYPE']==1) { ?>
                             <div class="form-group">
                                 <div class="custom-control custom-radio">
                                     <input class="custom-control-input" type="radio" id="MAIN_PRODUCT" name="PRODUCT_TYPE" value="1" checked>
                                     <label for="MAIN_PRODUCT" class="custom-control-label">Ana Ürün</label>
                                 </div>
                             </div>
+                            <?php } else { ?>
                             <div class="form-group">
                                 <div class="custom-control custom-radio">
                                     <input class="custom-control-input" type="radio" id="EXTRA_PRODUCT" value="0" name="PRODUCT_TYPE">
                                     <label for="EXTRA_PRODUCT" class="custom-control-label">Ek Ürün</label>
                                 </div>
                             </div>
+                            <?php } ?>
+                            <?php if($row_product['PRODUCT_TYPE']==0) { ?>
+                            <div class="form-group">
+                                <div class="custom-control custom-radio">
+                                    <input class="custom-control-input" type="radio" id="MAIN_PRODUCT" name="PRODUCT_TYPE" value="1" >
+                                    <label for="MAIN_PRODUCT" class="custom-control-label">Ana Ürün</label>
+                                </div>
+                            </div>
+                            <?php } else { ?>
+                            <div class="form-group">
+                                <div class="custom-control custom-radio">
+                                    <input class="custom-control-input" type="radio" id="EXTRA_PRODUCT" value="0" name="PRODUCT_TYPE" checked>
+                                    <label for="EXTRA_PRODUCT" class="custom-control-label">Ek Ürün</label>
+                                </div>
+                            </div>
+                            <?php } ?>
                             <label class="col-form-label" for="inputError">Yayına Alınsın Mı?</label>
+                            <?php if($row_product['STATUS']==1) { ?>
                             <div class="form-group">
                                 <div class="custom-control custom-radio">
                                     <input class="custom-control-input" type="radio" value="1" id="YES_TAX" name="STATUS" checked>
                                     <label for="YES_TAX" class="custom-control-label">Evet</label>
                                 </div>
                             </div>
+                            <?php } else { ?>
                             <div class="form-group">
                                 <div class="custom-control custom-radio">
                                     <input class="custom-control-input" type="radio" id="NO_TAX" value="0" name="STATUS">
                                     <label for="NO_TAX" class="custom-control-label">Hayır, taslak olarak kaydet</label>
                                 </div>
                             </div>
+                            <?php } ?>
+                            <?php if($row_product['STATUS']==0) { ?>
+                            <div class="form-group">
+                                <div class="custom-control custom-radio">
+                                    <input class="custom-control-input" type="radio" value="1" id="YES_TAX" name="STATUS">
+                                    <label for="YES_TAX" class="custom-control-label">Evet</label>
+                                </div>
+                            </div>
+                            <?php } else { ?>
+                            <div class="form-group">
+                                <div class="custom-control custom-radio">
+                                    <input class="custom-control-input" type="radio" id="NO_TAX" value="0" name="STATUS" checked>
+                                    <label for="NO_TAX" class="custom-control-label">Hayır, taslak olarak kaydet</label>
+                                </div>
+                            </div>
+                            <?php } ?>
                             <div class="form-group">
                               <label>KDV %</label>
                               <select name="TAX" class="form-control select2bs4" style="width: 100%;">
-                                <option selected="18">18</option>
-                                <option>8</option>
-                                <option>1</option>
+                                <option selected="<?php echo $row_product['TAX']?>"><?php echo $row_product['TAX']?></option>
+                                <option value="8">8</option>
+                                <option value="1">1</option>
                               </select>
                             </div>
                             <label class="col-form-label" for="INCLUDE_TAX">Girilen Fiyatlara KDV</label>
+                            <?php if($row_product['INCLUDE_TAX']==1) { ?>
                             <div class="form-group">
                                 <div class="custom-control custom-radio">
                                     <input class="custom-control-input" type="radio" id="YES_KDV" name="INCLUDE_TAX" value="1" checked required>
                                     <label for="YES_KDV" class="custom-control-label">Dahil</label>
                                 </div>
                             </div>
+                            <?php } else { ?>
                             <div class="form-group">
                                 <div class="custom-control custom-radio">
                                     <input class="custom-control-input" type="radio" id="NO_KDV" value="0" name="INCLUDE_TAX" required>
                                     <label for="NO_KDV" class="custom-control-label">Hariç</label>
                                 </div>
                             </div>
+                            <?php } ?>
                             <div class="form-group">
                                 <label for="PRICE">Ürün Fiyatı</label>
                                 <input step="0.01" type="number" class="form-control" name="PRICE" placeholder="Ürün Fiyatı" value = "<?php echo $row_product['PRICE'] ?>">
@@ -125,28 +169,55 @@
                                 <label for="STOCK_CODE">Stok Kodu</label>
                                 <input type="text" class="form-control" name="STOCK_CODE" placeholder="Stok Kodu" value = "<?php echo $row_product['STOCK_CODE'] ?>">
                             </div>
+                            <?php if($row_product['ABROAD']== 0) {?>
                             <div class="form-group">
                                 <div class="custom-control custom-checkbox">
                                   <input class="custom-control-input" type="checkbox" name="ABROAD" id="ABROAD">
                                   <label for="ABROAD" class="custom-control-label">Bu ürün sadece yurtdışı bölgelerine satılsın.</label>
                                 </div>
                             </div>
+                            <?php } else { ?>
+                                <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                  <input class="custom-control-input" type="checkbox" name="ABROAD" id="ABROAD" checked>
+                                  <label for="ABROAD" class="custom-control-label">Bu ürün sadece yurtdışı bölgelerine satılsın.</label>
+                                </div>
+                            </div>
+                            <?php } ?>
+                            <?php if($row_product['CUSTOMER_UPLOAD']== 0) {?>
                             <div class="form-group">
                                 <div class="custom-control custom-checkbox">
                                   <input class="custom-control-input" type="checkbox" name="CUSTOMER_UPLOAD" id="CUSTOMER_UPLOAD">
                                   <label for="CUSTOMER_UPLOAD" class="custom-control-label">Müşteriler Görsel Yükleyebilsin (Kişisel Ürünler)</label>
                                 </div>
                             </div>
+                            <?php } else { ?>
+                                <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                  <input class="custom-control-input" type="checkbox" name="CUSTOMER_UPLOAD" id="CUSTOMER_UPLOAD" checked>
+                                  <label for="CUSTOMER_UPLOAD" class="custom-control-label">Müşteriler Görsel Yükleyebilsin (Kişisel Ürünler)</label>
+                                </div>
+                            </div>
+                            <?php } ?>
                             <div class="form-group">
                                 <label for="DECI">Desi</label>
                                 <input type="number" class="form-control" name="DECI" placeholder="Desi" required>
                             </div>
+                            <?php if($row_product['FREE_CARGO']== 0) { ?>
                             <div class="form-group">
                                 <div class="custom-control custom-checkbox">
                                   <input class="custom-control-input" type="checkbox" name="FREE_CARGO" id="FREE_CARGO">
                                   <label for="FREE_CARGO" class="custom-control-label">Ücretsiz Kargo Olsun</label>
                                 </div>
                             </div>
+                            <?php } else { ?>
+                                <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                  <input class="custom-control-input" type="checkbox" name="FREE_CARGO" id="FREE_CARGO" checked>
+                                  <label for="FREE_CARGO" class="custom-control-label">Ücretsiz Kargo Olsun</label>
+                                </div>
+                            </div>
+                            <?php } ?>
                             <div class="form-group">
                                 <label for="CARGO_NOTE">Kargo Yazısı</label>
                                 <input type="text" class="form-control" name="CARGO_NOTE" value = "<?php echo $row_product['CARGO_NOTE'] ?>">
@@ -173,18 +244,10 @@
                                 <input type="file" name="file-input[]" id="file-input" multiple />
                                 <div id="thumb-output"></div>
                         </div>
-                        <!--
-                        <div class="tab-pane" id="delivery">
-                            <div class="form-group">
-                                <label for="aa">Kargo Yazısı</label>
-                                <input type="number" class="form-control" name="aa" placeholder="Ürün Fiyat">
-                            </div>
-                        </div>
-                        -->
                         </div>    
                     </div>
                     <div class="card-footer">
-                        <button type="submit" name="product" class="btn btn-success">Kaydet</button>
+                        <button type="submit" name="productUpdate" class="btn btn-success">Kaydet</button>
                     </div>
                 </form>
             </div>

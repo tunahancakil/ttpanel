@@ -59,8 +59,7 @@ if(isset($_POST['categoryUpdate'])) {
 };
 
 //Product update
-/*
-if($_POST['editType'] === 'Product') {
+if(isset($_POST['productUpdate'])) {
     $title = $_POST['TITLE'];
     $category_list = $_POST['CATEGORY'];
     $main_category = $_POST['MAIN_CATEGORY'];
